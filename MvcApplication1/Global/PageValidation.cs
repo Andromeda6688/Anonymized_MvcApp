@@ -14,6 +14,7 @@ namespace MvcApplication1.Global
 
         
         [Required(ErrorMessage = "Обязательное поле")]
+        [MaxLength(60, ErrorMessage = "Длина не более 60 символов")]
         public string Title;
 
         

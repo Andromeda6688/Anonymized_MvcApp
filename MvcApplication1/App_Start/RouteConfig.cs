@@ -22,8 +22,8 @@ namespace MvcApplication1
 
             routes.MapRoute(
                name: "Administration",
-               url: "Admin/{action}/{Id}",
-               defaults: new { controller = "Administration", action = "Page", Id = UrlParameter.Optional }
+               url: "Admin/{action}/{pageId}",
+               defaults: new { controller = "Administration", action = "Page", pageId = UrlParameter.Optional }
            );
 
             routes.MapRoute(

@@ -18,10 +18,10 @@ namespace MvcApplication1.Controllers
             return Redirect("Admin/Page");
         }
 
-        
-        public ActionResult Page(string Id)
+
+        public ActionResult Page(string pageId)
         {
-            if (string.IsNullOrEmpty(Id))
+            if (string.IsNullOrEmpty(pageId))
             {
                 SqlRepository repository = new SqlRepository();
 
@@ -29,9 +29,15 @@ namespace MvcApplication1.Controllers
 
                 return View("PageList", model);
             }
+            else if (string.Compare(pageId, "new", true) == 0)
+            {
+                Page model = new Page();
+
+                return View("PageEdit", model);
+            }
             else
             {
-                int pageID = Convert.ToInt32(Id);
+                int pageID = Convert.ToInt32(pageId);
 
                 SqlRepository repository = new SqlRepository();
 
@@ -43,17 +49,33 @@ namespace MvcApplication1.Controllers
         }
 
         [HttpPost]
-        public ActionResult Page(Page model)
+        public ActionResult Page(string pageId, Page model)
         {
+            
             if (ModelState.IsValid &&
-                !string.IsNullOrEmpty(model.Title) &&
-                !string.IsNullOrEmpty(model.Address) 
-                )
-            {
-                SqlRepository repository = new SqlRepository();
-                repository.UpdatePage(model);
-                ViewBag.Message = "Изменения успешно сохранены";
+                    !string.IsNullOrEmpty(model.Title) &&
+                    !string.IsNullOrEmpty(model.Address))
+                {
+
+                    if (string.Compare(pageId, "new", true) == 0)
+                    {
+                        
+                        SqlRepository repository = new SqlRepository();
+                        int newPageId = repository.CreatePage(model);
+                        ViewBag.Message = "Страница добавлена";
+
+                        return RedirectToAction("Page", "Administration", new { pageId = newPageId });
+                       
+                    }
+
+                    else // modifying existing page
+                    {
+                        SqlRepository repository = new SqlRepository();
+                        repository.UpdatePage(model);
+                        ViewBag.Message = "Изменения успешно сохранены";
+                    }
             }
+
             else
             {
                 ModelState.AddModelError("", "Изменения не сохранены");
@@ -71,8 +93,8 @@ namespace MvcApplication1.Controllers
         public ActionResult AdminMenuPartial()
         {
             List<NavMenuItem> model = new List<NavMenuItem>()
-            { new NavMenuItem() { Title = "Страницы", Address = "~/Admin/Page" },
-              new NavMenuItem() { Title = "Пользователи", Address = "~/Admin/User"}
+            { new NavMenuItem() { Title = "Страницы", Address = "Admin/Page" },
+              new NavMenuItem() { Title = "Пользователи", Address = "Admin/User"}
             };
 
             return PartialView("_AdminMenuPartial", model);

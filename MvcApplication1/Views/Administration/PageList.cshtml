@@ -4,14 +4,14 @@
 }
 
 <h1>Управление страницами</h1>
-<ul>
+
 @foreach (var page in Model)
 {
-    <li>
-        @Html.Label(page.Title);
-        <input type="button" value="Редактировать"
-               onclick="location.href='@Url.Action("Page", "Administration", new {Id =page.Id})'" />
-    </li>
-    
+    <p>
+        <a href="@Url.Action("Page", "Administration", new {pageId = page.Id})">
+            @page.Title </a>
+    </p>
 }
-</ul>
+<input class="approve_button" type="button" value="Новая страница"
+       onclick="location.href='@Url.Action("Page", "Administration", new {pageId = "new"})'" />
+

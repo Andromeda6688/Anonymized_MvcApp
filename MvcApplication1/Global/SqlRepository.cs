@@ -49,7 +49,7 @@ namespace MvcApplication1.Models
             return result;
         }
 
-        public bool CreatePage(
+        public int CreatePage(
             string p_Title,
             string p_Description,
             string p_Keywords,
@@ -73,18 +73,19 @@ namespace MvcApplication1.Models
             return CreatePage(_page);
         }
 
-        public bool CreatePage(Page p_Page)
+        public int CreatePage(Page p_Page)
         {
             if (!(String.IsNullOrEmpty(p_Page.Title) &&
                 String.IsNullOrEmpty(p_Page.Address)))
             {
                 DB.Pages.InsertOnSubmit(p_Page);
                 DB.Pages.Context.SubmitChanges();
-                return true;
+
+                return p_Page.Id;
             }
             else
             {
-                return false;
+                return 0;
             }
         }
 
@@ -94,15 +95,8 @@ namespace MvcApplication1.Models
 
             if (changingPage!=null)
             {
-                changingPage.Title = p_Page.Title;
-                changingPage.Description = p_Page.Description;
-                changingPage.Keywords = p_Page.Keywords;
-                changingPage.Content = p_Page.Content;
-                changingPage.ParentId = p_Page.ParentId;
-                changingPage.Address = p_Page.Address;
-                changingPage.IsVisible = p_Page.IsVisible;
-
-                DB.SubmitChanges();
+                UpdatePage(p_Page.Id, p_Page.Title, p_Page.Description, p_Page.Keywords, 
+                    p_Page.Content, p_Page.Address, p_Page.ParentId, p_Page.IsVisible);
 
                 return true;
             }
@@ -123,27 +117,20 @@ namespace MvcApplication1.Models
             bool p_IsVisible = true
             )
         {
-            Page changingPage = DB.Pages.FirstOrDefault(p => p.Id == p_Id);
+            Page changingPage = DB.Pages.FirstOrDefault(p => p.Id == p_Id);            
 
-            if (changingPage != null)
-            {
-                changingPage.Title = p_Title;
-                changingPage.Description = p_Description;
-                changingPage.Keywords = p_Keywords;
-                changingPage.Content = p_Content;
-                changingPage.ParentId = p_ParentId;
-                changingPage.Address = p_Address;
-                changingPage.IsVisible = p_IsVisible;
+            changingPage.Title = p_Title;
+            changingPage.Description = p_Description;
+            changingPage.Keywords = p_Keywords;
+            changingPage.Content = p_Content;
+            changingPage.ParentId = p_ParentId;
+            changingPage.Address = p_Address;
+            changingPage.IsVisible = p_IsVisible;
 
-                DB.SubmitChanges();
+            DB.SubmitChanges();
 
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+            return true;  
+        }       
 
         public bool RemovePage(int p_Id)
         {
