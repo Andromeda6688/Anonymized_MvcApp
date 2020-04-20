@@ -216,7 +216,7 @@ footer{
     margin: 0 auto;
 }
 
- fieldset{
+fieldset{
      padding:10px;
  }
 
@@ -236,9 +236,30 @@ fieldset li{
     margin: 0 auto;
 }
 
+.approve_button{
+    padding: 3px 10px;
+    width: 100px;
+    color: blue;
+}
+
+.cancel_button{
+    padding: 3px 10px;
+    width: 100px;
+    color: red;
+}
+
+div.buttons {
+    margin: 0 auto;
+    text-align:center;
+}
+
 .validation-summary-errors{
     color:red;
     padding:10px 0 0 30px;
+}
+
+span.field-validation-error {
+    color:red;
 }
 
 /*===============ERRORS===============*/

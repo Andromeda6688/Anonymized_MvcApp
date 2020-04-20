@@ -52,12 +52,13 @@ namespace MvcApplication1.Controllers
             {
                 SqlRepository repository = new SqlRepository();
                 repository.UpdatePage(model);
+                ViewBag.Message = "Изменения успешно сохранены";
             }
             else
             {
-                ModelState.AddModelError("", "Ошибка редактирования");
+                ModelState.AddModelError("", "Изменения не сохранены");
             }
-            ViewBag.Message = "Изменения успешно сохранены";
+            
             return View("PageEdit", model);
 
             

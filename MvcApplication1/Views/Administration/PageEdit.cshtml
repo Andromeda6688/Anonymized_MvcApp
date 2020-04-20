@@ -15,35 +15,49 @@
 <label class="validation-summary-errors"> @ViewBag.Message</label>
             <ul>
                 <li>
-                    @Html.Label("Заголовок:")
+                    @Html.Label("Заголовок")
                     @Html.TextBoxFor(m=> m.Title)
+                    @Html.ValidationMessageFor(m=> m.Title)
                 </li>
 
                 <li>
-                    @Html.Label("Описание:")
+                    @Html.Label("Описание (description)")
                     @Html.TextBoxFor(m => m.Description)
+                    @Html.ValidationMessageFor(m => m.Description)
                 </li>
                 <li>
-                    @Html.Label("Ключевые слова:")
+                    @Html.Label("Ключевые слова (keywords)")
                     @Html.TextBoxFor(m => m.Keywords)
+                    @Html.ValidationMessageFor(m => m.Keywords)
                 </li>
                 <li>
-                    @Html.Label("Псевдоним (адрес):")
+                    @Html.Label("Адрес (псевдоним)")
                     @Html.TextBoxFor(m => m.Address)
+                    @Html.ValidationMessageFor(m => m.Address)
                 </li>
                 <li>
-                    @Html.Label("Содержимое:")
-                    @Html.TextBoxFor(m => m.Content)
-                </li>                   
-                <li>
-                    @Html.Label("Отображать / скрыть:")
+                    @Html.Label("Отобразить / скрыть")
                     @Html.CheckBoxFor(m => m.IsVisible)
+                    @Html.ValidationMessageFor(m => m.IsVisible)
                 </li>
+                <li>
+                    @Html.Label("Порядок отображения")
+                    @Html.TextBoxFor(m => m.DisplayOrder)
+                    @Html.ValidationMessageFor(m => m.DisplayOrder)
+                </li>
+                <li>
+                    @Html.Label("Основное содержимое")
+                    @Html.TextBoxFor(m => m.Content)
+                    @Html.ValidationMessageFor(m => m.Content)
+                </li>                   
+              
             </ul>
 
-            <input type="submit" value="Сохранить" />
-            <input type="button" value="Выйти"
-                   onclick="location.href='@Url.Action("Page", "Administration")'" />
+            <div class="buttons">
+                <input class="approve_button" type="submit" value="Сохранить" />
+                <input class="cancel_button" type="button" value="Отменить"
+                       onclick="location.href='@Url.Action("Page", "Administration")'" />
+            </div>
             }            
 </fieldset>
     </section>

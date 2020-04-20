@@ -20,6 +20,7 @@ namespace MvcApplication1.Global
 	using System.Linq.Expressions;
 	using System.ComponentModel;
 	using System;
+    using System.ComponentModel.DataAnnotations;
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="WebSiteDB")]
@@ -75,6 +76,7 @@ namespace MvcApplication1.Global
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Pages")]
+    [MetadataType(typeof(PageValidation))]
 	public partial class Page : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		

@@ -190,6 +190,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Global\PageValidation.cs" />
     <Compile Include="Global\SqlRepository.cs" />
     <Compile Include="Global\WebSiteDB.designer.cs">
       <AutoGen>True</AutoGen>
