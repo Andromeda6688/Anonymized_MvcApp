@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link rel="stylesheet" type="text/css" href="/Content/LCKStyle.css">
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <div class="horisontal_line">
+                <div class="horisontal_line_item">
+                    <a href="~/Account/Login"><img src="/imgs/menu_pic.png" width="34px" height="34px" /></a>
+                </div>
+                @{Html.RenderAction("CurrentUserPartial", "Account");    }
+            </div>
+            <div class="container">
+                <div id="info_line">
+                    <div id="logo_div" class="col-2-3">
+                        <img id="logo" src="/imgs/LOGO_white.jpg" />
+                    </div>
+                    <div class="col-1-3">
+                        <div id="address_div">
+                            <p>(4842)<span class="big_text"> 77-00-44</span></p>
+                            <p><a href="mailto:zakaz@lc-kaluga.ru">zakaz@lc-kaluga.ru</a></p>
+                        </div>
+                    </div>
+                </div>
+                <nav>
+                    @{Html.RenderAction("AdminMenuPartial", "Administration");    }
+                </nav>
+            </div>
+        </header>
+
+        <!--PAGE-->
+        <div class="main">
+            <div class="container">
+                @RenderBody()
+            </div>
+        </div>
+
+        <div class="buffer"></div>
+    </div>
+
+    <!--FOOTER-->
+    <footer>
+        <div class="horisontal_line">
+            <p>&copy; @DateTime.Now.Year - Light Communication Kaluga</p>
+        </div>
+    </footer>
+</body>
+</html>

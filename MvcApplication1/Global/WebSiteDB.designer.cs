@@ -96,6 +96,8 @@ namespace MvcApplication1.Global
 		
 		private bool _IsVisible;
 		
+		private System.Nullable<int> _DisplayOrder;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -116,6 +118,8 @@ namespace MvcApplication1.Global
     partial void OnAddressChanged();
     partial void OnIsVisibleChanging(bool value);
     partial void OnIsVisibleChanged();
+    partial void OnDisplayOrderChanging(System.Nullable<int> value);
+    partial void OnDisplayOrderChanged();
     #endregion
 		
 		public Page()
@@ -143,7 +147,7 @@ namespace MvcApplication1.Global
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="VarChar(60) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="NChar(60) NOT NULL", CanBeNull=false)]
 		public string Title
 		{
 			get
@@ -163,7 +167,7 @@ namespace MvcApplication1.Global
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="VarChar(500)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NChar(500)")]
 		public string Description
 		{
 			get
@@ -183,7 +187,7 @@ namespace MvcApplication1.Global
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Keywords", DbType="VarChar(500)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Keywords", DbType="NChar(500)")]
 		public string Keywords
 		{
 			get
@@ -203,7 +207,7 @@ namespace MvcApplication1.Global
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Content", DbType="VarChar(MAX)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Content", DbType="NVarChar(MAX)")]
 		public string Content
 		{
 			get
@@ -279,6 +283,26 @@ namespace MvcApplication1.Global
 					this._IsVisible = value;
 					this.SendPropertyChanged("IsVisible");
 					this.OnIsVisibleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DisplayOrder", DbType="Int")]
+		public System.Nullable<int> DisplayOrder
+		{
+			get
+			{
+				return this._DisplayOrder;
+			}
+			set
+			{
+				if ((this._DisplayOrder != value))
+				{
+					this.OnDisplayOrderChanging(value);
+					this.SendPropertyChanging();
+					this._DisplayOrder = value;
+					this.SendPropertyChanged("DisplayOrder");
+					this.OnDisplayOrderChanged();
 				}
 			}
 		}

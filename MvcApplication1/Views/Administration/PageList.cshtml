@@ -1,0 +1,17 @@
+﻿@model List<MvcApplication1.Models.PagesMenuItem>
+@{
+    Layout = "~/Views/Administration/_AdminLayout.cshtml";
+}
+
+<h1>Управление страницами</h1>
+<ul>
+@foreach (var page in Model)
+{
+    <li>
+        @Html.Label(page.Title);
+        <input type="button" value="Редактировать"
+               onclick="location.href='@Url.Action("Page", "Administration", new {Id =page.Id})'" />
+    </li>
+    
+}
+</ul>

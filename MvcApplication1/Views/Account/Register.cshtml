@@ -13,8 +13,8 @@
     <section>
         <fieldset class="small">
             <legend>Регистрация</legend>
-
-
+@using (Html.BeginForm())
+{
             <ul>
                 <li>
                     @Html.LabelFor(m => m.Email)
@@ -43,12 +43,11 @@
                 </li>
             </ul>
 
-            <input class="main_button" type="submit" value="Register" />
-        </fieldset>
-    </section>
-
-@using (Html.BeginForm()) {
+            <input class="main_button" type="submit" value="Register" />    
+    
         @Html.AntiForgeryToken()
         @Html.ValidationSummary()
 }
+        </fieldset>
+    </section>
 </div>

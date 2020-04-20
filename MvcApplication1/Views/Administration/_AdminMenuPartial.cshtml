@@ -3,9 +3,7 @@
 
 @if (Model != null)
 {
-    <ul>
-        <li><a href="~/">Главная</a></li>
-
+    <ul> 
         @foreach (var page in Model)
         {
             <li><a href="~/@page.Address">@page.Title</a></li>

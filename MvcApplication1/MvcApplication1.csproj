@@ -197,7 +197,8 @@
       <DependentUpon>WebSiteDB.dbml</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\NavMenuModel.cs" />
+    <Compile Include="Models\PagesMenuItem.cs" />
+    <Compile Include="Models\NavMenuItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -322,11 +323,14 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Administration\Index.cshtml" />
+    <Content Include="Views\Administration\PageEdit.cshtml" />
     <Content Include="Views\Home\Page.cshtml" />
     <Content Include="Views\Home\Test.cshtml" />
     <Content Include="Views\Account\_LogOffPartial.cshtml" />
     <Content Include="Views\Shared\_NavMenuPartial.cshtml" />
+    <Content Include="Views\Administration\_AdminLayout.cshtml" />
+    <Content Include="Views\Administration\_AdminMenuPartial.cshtml" />
+    <Content Include="Views\Administration\PageList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="imgs\" />

@@ -42,7 +42,7 @@ namespace MvcApplication1.Controllers
 
             // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "Неудачная попытка входа");
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //

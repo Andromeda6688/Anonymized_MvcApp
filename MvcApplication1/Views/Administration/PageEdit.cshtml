@@ -1,0 +1,51 @@
+﻿@model MvcApplication1.Global.Page
+@{
+    Layout = "~/Views/Administration/_AdminLayout.cshtml";
+}
+
+
+<h1>Редактирование страницы</h1>
+
+    <section>
+        <fieldset>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+<label class="validation-summary-errors"> @ViewBag.Message</label>
+            <ul>
+                <li>
+                    @Html.Label("Заголовок:")
+                    @Html.TextBoxFor(m=> m.Title)
+                </li>
+
+                <li>
+                    @Html.Label("Описание:")
+                    @Html.TextBoxFor(m => m.Description)
+                </li>
+                <li>
+                    @Html.Label("Ключевые слова:")
+                    @Html.TextBoxFor(m => m.Keywords)
+                </li>
+                <li>
+                    @Html.Label("Псевдоним (адрес):")
+                    @Html.TextBoxFor(m => m.Address)
+                </li>
+                <li>
+                    @Html.Label("Содержимое:")
+                    @Html.TextBoxFor(m => m.Content)
+                </li>                   
+                <li>
+                    @Html.Label("Отображать / скрыть:")
+                    @Html.CheckBoxFor(m => m.IsVisible)
+                </li>
+            </ul>
+
+            <input type="submit" value="Сохранить" />
+            <input type="button" value="Выйти"
+                   onclick="location.href='@Url.Action("Page", "Administration")'" />
+            }            
+</fieldset>
+    </section>
+
+ 

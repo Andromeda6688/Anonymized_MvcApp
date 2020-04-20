@@ -46,7 +46,13 @@ namespace MvcApplication1.Controllers
 
         public ActionResult NavMenuPartial()
         {
-            NavMenuModel model = new NavMenuModel();
+            SqlRepository repository = new SqlRepository();
+
+            //now we need only 1-level menu. perhaps we will change it later
+            //TODO
+            // n-level menu
+            
+            List<NavMenuItem> model = repository.GetNavMenu();            
 
             return PartialView("_NavMenuPartial", model);  
         }
@@ -59,10 +65,5 @@ namespace MvcApplication1.Controllers
             return View();
         }
 
-        public ActionResult TestView()
-        {
-
-            return View();
-        }
     }
 }

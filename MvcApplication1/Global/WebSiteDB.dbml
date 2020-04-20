@@ -3,13 +3,14 @@
   <Table Name="dbo.Pages" Member="Pages">
     <Type Name="Page">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Title" Type="System.String" DbType="VarChar(60) NOT NULL" CanBeNull="false" />
-      <Column Name="Description" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
-      <Column Name="Keywords" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
-      <Column Name="Content" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="NChar(60) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NChar(500)" CanBeNull="true" />
+      <Column Name="Keywords" Type="System.String" DbType="NChar(500)" CanBeNull="true" />
+      <Column Name="Content" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="ParentId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Address" Type="System.String" DbType="NChar(20) NOT NULL" CanBeNull="false" />
       <Column Name="IsVisible" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DisplayOrder" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

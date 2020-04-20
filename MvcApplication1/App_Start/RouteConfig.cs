@@ -22,8 +22,8 @@ namespace MvcApplication1
 
             routes.MapRoute(
                name: "Administration",
-               url: "Admin/{PageName}",
-               defaults: new { controller = "Administration", action = "Index", PageName = UrlParameter.Optional }
+               url: "Admin/{action}/{Id}",
+               defaults: new { controller = "Administration", action = "Page", Id = UrlParameter.Optional }
            );
 
             routes.MapRoute(
@@ -48,8 +48,8 @@ namespace MvcApplication1
 
             routes.MapRoute(
              name: "Default",
-             url: "{controller}/{action}",
-             defaults: new { controller = "Home", action="Index" }
+             url: "{controller}/{action}/{param}",
+             defaults: new { controller = "Home", action = "Index", param = UrlParameter.Optional }
          );
 
           
