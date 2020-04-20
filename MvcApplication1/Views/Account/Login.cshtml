@@ -1,0 +1,41 @@
+﻿@model MvcApplication1.Models.LoginModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+   // ViewBag.Title = "Вход";
+}
+
+<div class="small_formcontainer">
+
+    <section id="loginForm">
+        <fieldset class="small">
+@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+            <legend>Залогиньтесь, чтобы войти</legend>
+            <ul>
+                <li>
+                    @Html.LabelFor(m => m.Email)
+                    @Html.TextBoxFor(m => m.Email)
+                    @Html.ValidationMessageFor(m => m.Email)
+                </li>
+                <li>
+                    @Html.LabelFor(m => m.Password)
+                    @Html.PasswordFor(m => m.Password)
+                    @Html.ValidationMessageFor(m => m.Password)
+                </li>
+                <li>
+                    @Html.CheckBoxFor(m => m.RememberMe)
+                    @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
+                </li>
+            </ul>
+
+            <input class="main_button" type="submit" value="Войти" />
+}
+        </fieldset>
+
+    </section>
+</div>

@@ -1,0 +1,54 @@
+﻿@model MvcApplication1.Models.RegisterModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<hgroup class="title">
+    <h1>Создать новый аккаунт</h1>
+</hgroup>
+
+<div class="small_formcontainer">
+
+    <section>
+        <fieldset class="small">
+            <legend>Регистрация</legend>
+
+
+            <ul>
+                <li>
+                    @Html.LabelFor(m => m.Email)
+                    @Html.TextBoxFor(m => m.Email)
+                </li>
+
+                <li>
+                    @Html.LabelFor(m => m.Name)
+                    @Html.TextBoxFor(m => m.Name)
+                </li>
+                <li>
+                    @Html.LabelFor(m => m.Password)
+                    @Html.PasswordFor(m => m.Password)
+                </li>
+                <li>
+                    @Html.LabelFor(m => m.ConfirmPassword)
+                    @Html.PasswordFor(m => m.ConfirmPassword)
+                </li>
+                <li>
+                    @Html.LabelFor(m => m.IsActive)
+                    @Html.CheckBoxFor(m => m.IsActive)
+                </li>
+                <li>
+                    @Html.LabelFor(m => m.IsAdmin)
+                    @Html.CheckBoxFor(m => m.IsAdmin)
+                </li>
+            </ul>
+
+            <input class="main_button" type="submit" value="Register" />
+        </fieldset>
+    </section>
+
+@using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+}
+</div>

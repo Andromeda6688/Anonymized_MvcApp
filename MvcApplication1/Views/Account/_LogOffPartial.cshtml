@@ -1,0 +1,18 @@
+﻿@model MvcApplication1.Models.User
+
+
+@if (Model!=null)
+{
+    <div class="horisontal_line_item">
+        <label>@Model.Name</label>
+    </div>
+    <div class="horisontal_line_item">
+        <input class="black_button" id="LogOff" type="button" value="Выйти"
+               onclick="location.href='@Url.Action("LogOff", "Account")'" />
+    </div>
+            }
+            
+@using (Html.BeginForm())
+{
+    <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
+}

@@ -1,0 +1,14 @@
+﻿@model MvcApplication1.Models.NavMenuModel
+
+
+@if (Model != null)
+{
+    <ul>
+        <li><a href="~/">Главная</a></li>
+
+        @foreach (var page in Model.Menu)
+        {
+            <li><a href="~/@page.Address">@page.Title</a></li>
+        }
+    </ul>
+}

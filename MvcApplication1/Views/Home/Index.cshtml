@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>testPage</title>
+    <link rel="stylesheet" type="text/css" href="/Content/LCKStyle.css">
+</head>
+<body>
+    <div class="wrapper">
+        <!--HEADER-->
+        <header>
+            <div class="horisontal_line">
+                <div class="horisontal_line_item">
+                    <a href="~/Account/Login"><img src="/imgs/menu_pic.png" width="34px" height="34px" /></a>
+                </div>
+                @{Html.RenderAction("CurrentUserPartial", "Account");    }
+            </div>
+            <div class="container">
+                <div id="info_line">
+                    <div id="logo_div" class="col-2-3">
+                        <img id="logo" src="/imgs/LOGO_white.jpg" />
+                    </div>
+                    <div class="col-1-3">
+                        <div id="address_div">
+                            <p>(4842)<span class="big_text"> 77-00-44</span></p>
+                            <p><a href="mailto:zakaz@lc-kaluga.ru">zakaz@lc-kaluga.ru</a></p>
+                        </div>
+                    </div>
+                </div>
+                <nav>
+                    @{Html.RenderAction("NavMenuPartial", "Home");    }
+                   <!-- <ul>
+                        <li><a href="Index">Главная</a></li>
+                        <li><a href="AboutUs">О нас</a></li>
+                        <li><a href="Contacts">Контакты</a></li>
+                    </ul>-->
+                </nav>
+                <div id="main_img_logo"> </div>
+            </div>
+        </header>
+
+        <!--PAGE-->
+        <div class="main">
+            <div class="container">
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/acer.jpg" alt="Acer" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/AMD.png" alt="AMD" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/APC.png" alt="APC" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/asus.png" alt="ASUS" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/avaya.png" alt="AVAYA" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/canon.jpg" alt="Canon" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/Cisco.png" alt="Cisco" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/commscope.jpg" alt="CommScope" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/CyberPower.jpg" alt="CyberPower" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/defender.jpg" alt="Defender" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/dell.png" alt="Dell" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/epson.png" alt="Epson" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/foxconn.jpg" alt="Foxconn" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/genius.jpg" alt="Genius" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/gigabyte.png" alt="Gigabyte" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/hikvision.png" alt="HikVision" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/hp.png" alt="Hewlett-Packard" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/HP-serviceONE.jpg" alt="HP Service Center" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/ibm.png" alt="IBM" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/intel.jpg" alt="Intel" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/Jabra.jpg" alt="Jabra" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/Juniper.jpg" alt="Juniper" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/kaspersky.png" alt="Kaspersky" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/legrand.jpg" alt="Legrand" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/Lenovo.png" alt="Lenovo" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/Logitech.png" alt="Logitech" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/microsoft.jpg" alt="Microsoft" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/MicrosoftPartnerNetwork.jpg" alt="Microsoft Partner Network" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/nvidia.jpg" alt="Nvidia" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/Panasonic.png" alt="Panasonic" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/panduit.jpg" alt="Panduit" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/philips.png" alt="Philips" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/RedHat.png" alt="RedHat" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/RnM.jpg" alt="R&M" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/Schneider_Electric.jpg" alt="Schneider Electric" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/seagate.jpg" alt="Seagate" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/siemens.png" alt="Siemens" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/supermicro.png" alt="SuperMicro" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/VMware.png" alt="VMware" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/wacom.jpg" alt="Wacom" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/xerox.jpg" alt="Xerox" />
+                </div>
+                <div class="vendor-item">
+                    <img class="partner_logo" src="/imgs/partners_logo/zebra.jpg" alt="Zebra" />
+                </div>               
+            </div>
+
+            <div class="buffer"></div>
+        </div>
+    </div>
+
+    <!--FOOTER-->
+    <footer>
+        <div class="horisontal_line">
+            <p>&copy; @DateTime.Now.Year - Light Communication Kaluga</p>
+        </div>
+    </footer>
+</body>
+</html>
