@@ -98,6 +98,8 @@ namespace MvcApplication1.Global
 		
 		private bool _IsVisible;
 		
+		private bool _IsInMenu;
+		
 		private System.Nullable<int> _DisplayOrder;
 		
     #region Extensibility Method Definitions
@@ -120,6 +122,8 @@ namespace MvcApplication1.Global
     partial void OnAddressChanged();
     partial void OnIsVisibleChanging(bool value);
     partial void OnIsVisibleChanged();
+    partial void OnIsInMenuChanging(bool value);
+    partial void OnIsInMenuChanged();
     partial void OnDisplayOrderChanging(System.Nullable<int> value);
     partial void OnDisplayOrderChanged();
     #endregion
@@ -169,7 +173,7 @@ namespace MvcApplication1.Global
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NChar(500)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NChar(160)")]
 		public string Description
 		{
 			get
@@ -189,7 +193,7 @@ namespace MvcApplication1.Global
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Keywords", DbType="NChar(500)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Keywords", DbType="NChar(160)")]
 		public string Keywords
 		{
 			get
@@ -285,6 +289,26 @@ namespace MvcApplication1.Global
 					this._IsVisible = value;
 					this.SendPropertyChanged("IsVisible");
 					this.OnIsVisibleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsInMenu", DbType="Bit NOT NULL")]
+		public bool IsInMenu
+		{
+			get
+			{
+				return this._IsInMenu;
+			}
+			set
+			{
+				if ((this._IsInMenu != value))
+				{
+					this.OnIsInMenuChanging(value);
+					this.SendPropertyChanging();
+					this._IsInMenu = value;
+					this.SendPropertyChanged("IsInMenu");
+					this.OnIsInMenuChanged();
 				}
 			}
 		}

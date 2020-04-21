@@ -1,4 +1,4 @@
-﻿@model MvcApplication1.Global.Page
+﻿@model MvcApplication1.Models.PageEditVM
 @{
     Layout = "~/Views/Administration/_AdminLayout.cshtml";
 }
@@ -16,44 +16,48 @@
             <ul>
                 <li>
                     @Html.Label("Заголовок")
-                    @Html.TextBoxFor(m=> m.Title)
-                    @Html.ValidationMessageFor(m=> m.Title)
+                    @Html.TextBoxFor(m=> m.Page.Title)
+                    @Html.ValidationMessageFor(m => m.Page.Title)
                 </li>
 
                 <li>
                     @Html.Label("Описание (description)")
-                    @Html.TextBoxFor(m => m.Description)
-                    @Html.ValidationMessageFor(m => m.Description)
+                    @Html.TextBoxFor(m => m.Page.Description)
+                    @Html.ValidationMessageFor(m => m.Page.Description)
                 </li>
                 <li>
                     @Html.Label("Ключевые слова (keywords)")
-                    @Html.TextBoxFor(m => m.Keywords)
-                    @Html.ValidationMessageFor(m => m.Keywords)
+                    @Html.TextBoxFor(m => m.Page.Keywords)
+                    @Html.ValidationMessageFor(m => m.Page.Keywords)
                 </li>
 
-                @if(string.Compare(Model.Address, "Index", true)!=0)
+                @if (string.Compare(Model.Page.Address, "Index", true) != 0)
                 {
-                <li>
-                    @Html.Label("Адрес (псевдоним)")
-                    @Html.TextBoxFor(m => m.Address)
-                    @Html.ValidationMessageFor(m => m.Address)
-                </li>
-                <li>
-                    @Html.Label("Отобразить / скрыть")
-                    @Html.CheckBoxFor(m => m.IsVisible)
-                    @Html.ValidationMessageFor(m => m.IsVisible)
-                </li>
-                <li>
-                    @Html.Label("Порядок отображения")
-                    @Html.TextBoxFor(m => m.DisplayOrder)
-                    @Html.ValidationMessageFor(m => m.DisplayOrder)
-                </li>
-                <li>
-                    @Html.Label("Основное содержимое")
-                    @Html.EditorFor(m => m.Content)
-                    @Html.ValidationMessageFor(m => m.Content)
-                    }
-                </li>  
+                    <li>
+                        @Html.Label("Адрес (псевдоним)")
+                        @Html.TextBoxFor(m => m.Page.Address)
+                        @Html.ValidationMessageFor(m => m.Page.Address)
+                    </li>
+                    <li>
+                        @Html.Label("Отобразить / скрыть")
+                        @Html.CheckBoxFor(m => m.Page.IsVisible)
+                        @Html.ValidationMessageFor(m => m.Page.IsVisible)
+                    </li>
+                    <li>
+                        @Html.Label("Родительская страница")
+                        @Html.DropDownListFor((m => m.Page.ParentId), 
+                            new SelectList(Model.Parents, "Id", "Title"))
+                    </li>
+                    <li>
+                        @Html.Label("Порядок отображения")
+                        @Html.TextBoxFor(m => m.Page.DisplayOrder)
+                        @Html.ValidationMessageFor(m => m.Page.DisplayOrder)
+                    </li>
+                    <li>
+                        @Html.Label("Основное содержимое")
+                        @Html.EditorFor(m => m.Page.Content)
+                        @Html.ValidationMessageFor(m => m.Page.Content)                        
+                    </li>  
                }              
               
             </ul>
@@ -66,12 +70,12 @@
     
     
     <div class="danger_area">
-        @Html.ActionLink("Удалить страницу", "DeletePage", "Administration", 
-    new { confirm = true, pageId = Model.Id},
+        @Html.ActionLink("Удалить страницу", "DeletePage", "Administration",
+     new { confirm = true, pageId = Model.Page.Id },
     new { onclick = "return confirm('Вы в самом деле хотите удалить страницу?')" }) 
     </div>
     
-            }            
+}            
 </fieldset>
     </section>
 

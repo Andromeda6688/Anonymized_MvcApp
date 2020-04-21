@@ -5,6 +5,7 @@
 html {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size:14px;
+
 }
 
 html, body, wrapper  {
@@ -57,7 +58,7 @@ header{
 .container {
     width:100%;
     max-width: 1000px;
-    min-width: 500px;
+    min-width: 600px;
     margin: 0 auto;
 }
 

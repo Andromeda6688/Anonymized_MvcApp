@@ -31,11 +31,11 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Page(string Id, string Message)
         {
+            Page _page;
+
             if (string.IsNullOrEmpty(Id))//new
             {
-                Page model = new Page();
-
-                return View("PageEdit", model);
+                 _page = new Page();
             }
             else
             {
@@ -43,12 +43,15 @@ namespace MvcApplication1.Controllers
 
                 SqlRepository repository = new SqlRepository();
 
-                Page model = repository.GetPage(pageID);
+                _page = repository.GetPage(pageID);                
 
                 ViewBag.Message = Message;
+                
+            }
 
-                return View("PageEdit", model);
-            }      
+            PageEditVM _VM = new PageEditVM(_page);
+
+            return View("PageEdit", _VM);
         }
 
         [HttpPost]

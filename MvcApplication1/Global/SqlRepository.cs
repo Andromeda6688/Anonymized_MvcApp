@@ -34,9 +34,13 @@ namespace MvcApplication1.Models
         public List<NavMenuItem> GetNavMenu()
         {
             //we should not load all page fields due to performance reasons
-            List<NavMenuItem> result = (from page in DB.Pages.Where(p => p.ParentId == DB.Pages.FirstOrDefault(m => m.Address == "Index").Id
-                                                                            && p.IsVisible == true).ToList()
-                                       select new NavMenuItem() { Title = page.Title, Address = page.Address }).ToList();
+            List<NavMenuItem> result = (from page in DB.Pages.Where(p => p.ParentId == DB.Pages.FirstOrDefault(m => m.Address == "Index").Id &&
+                                                                         p.IsVisible == true &&
+                                                                         p.IsInMenu).ToList()
+                                        orderby page.DisplayOrder
+                                                                            
+                                        select new NavMenuItem() { Title = page.Title, Address = page.Address }
+                                        ).ToList();
 
             return result;
         }
@@ -48,6 +52,17 @@ namespace MvcApplication1.Models
 
             return result;
         }
+
+        public List<PagesMenuItem> GetParentsList()
+        {
+            List<PagesMenuItem> result =
+                DB.Pages.Where(p=>p.ParentId==0) //only one level is acceptable
+                .Select(p => new PagesMenuItem() { Title = p.Title, Id = p.Id })
+                .ToList();
+
+            return result;
+        }
+
 
         public int CreatePage(
             string p_Title,

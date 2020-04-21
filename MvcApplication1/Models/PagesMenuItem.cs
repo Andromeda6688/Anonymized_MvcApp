@@ -8,8 +8,8 @@ namespace MvcApplication1.Models
 {
     public class PagesMenuItem
     {
-        public string Title;
-        public int Id;
+        public string Title { get; set; }
+        public int Id { get; set; }
     }
 
 }
