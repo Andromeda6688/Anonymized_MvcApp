@@ -47,7 +47,7 @@
                 </li>
                 <li>
                     @Html.Label("Основное содержимое")
-                    @Html.TextBoxFor(m => m.Content)
+                    @Html.EditorFor(m => m.Content)
                     @Html.ValidationMessageFor(m => m.Content)
                 </li>                   
               
@@ -58,6 +58,14 @@
                 <input class="cancel_button" type="button" value="Отменить"
                        onclick="location.href='@Url.Action("Page", "Administration")'" />
             </div>
+    
+    
+    <div class="danger_area">
+        @Html.ActionLink("Удалить страницу", "DeletePage", "Administration", 
+    new { confirm = true, pageId = Model.Id},
+    new { onclick = "return confirm('Вы в самом деле хотите удалить страницу?')" }) 
+    </div>
+    
             }            
 </fieldset>
     </section>

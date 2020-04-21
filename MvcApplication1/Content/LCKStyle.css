@@ -4,6 +4,7 @@
 }
 html {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size:14px;
 }
 
 html, body, wrapper  {
@@ -226,25 +227,24 @@ legend{
 
 fieldset li{
     margin: 10px;
-    list-style-type: none;
 }
 
 .main_button{
-    padding: 3px;
-    width: 100px;
+    padding: 5px 10px;
+    min-width: 100px;
     display: block;
     margin: 0 auto;
 }
 
 .approve_button{
     padding: 3px 10px;
-    width: 100px;
+    min-width: 100px;
     color: blue;
 }
 
 .cancel_button{
     padding: 3px 10px;
-    width: 100px;
+    min-width: 100px;
     color: red;
 }
 
@@ -262,7 +262,24 @@ span.field-validation-error {
     color:red;
 }
 
-/*===============ERRORS===============*/
+
+.danger_area{
+    margin:50px auto 10px auto;
+    padding:50px;
+    border: 1px solid red;
+    background-image: url(/imgs/danger_diag_bg.jpg);
+    background-repeat: repeat-x repeat-y;
+    text-align:center;
+
+}
+
+.danger_area a {
+    background-color:white;
+    padding:15px;
+    color:red;
+}
+
+/*===============404ERROR===============*/
 
 .ghost {
    width:400px;

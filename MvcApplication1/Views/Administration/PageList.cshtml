@@ -4,14 +4,28 @@
 }
 
 <h1>Управление страницами</h1>
+<section>
+    <fieldset>
 
-@foreach (var page in Model)
-{
-    <p>
-        <a href="@Url.Action("Page", "Administration", new {pageId = page.Id})">
-            @page.Title </a>
-    </p>
-}
-<input class="approve_button" type="button" value="Новая страница"
-       onclick="location.href='@Url.Action("Page", "Administration", new {pageId = "new"})'" />
+            @if (!string.IsNullOrEmpty(ViewBag.Message))
+            {
+                <div class="validation-summary-errors">
+                    <ul>
+                        <li> @ViewBag.Message</li>
+                    </ul>
+                </div>
+            }       
+
+            @foreach (var page in Model)
+            {
+                <p>
+                    <a href="@Url.Action("Page", "Administration", new {Id = page.Id})">
+                        @page.Title
+                    </a>
+                </p>
+            }
+            <input class="approve_button" type="button" value="Новая страница"
+                   onclick="location.href='@Url.Action("Page", "Administration")'" />
+</fieldset>
+</section>
 

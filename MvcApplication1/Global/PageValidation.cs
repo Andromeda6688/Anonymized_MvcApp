@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace MvcApplication1.Global
 {
@@ -25,8 +26,9 @@ namespace MvcApplication1.Global
         [MaxLength(160, ErrorMessage="Длина не более 160 символов")]
         public string Keywords;
 
-        
-        public string Content;
+        [AllowHtml]
+        [UIHint("tinymce_full")]
+        public string Content { get; set; }
 
         
         public int ParentId;
