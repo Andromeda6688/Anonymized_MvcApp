@@ -30,6 +30,9 @@
                     @Html.TextBoxFor(m => m.Keywords)
                     @Html.ValidationMessageFor(m => m.Keywords)
                 </li>
+
+                @if(string.Compare(Model.Address, "Index", true)!=0)
+                {
                 <li>
                     @Html.Label("Адрес (псевдоним)")
                     @Html.TextBoxFor(m => m.Address)
@@ -49,7 +52,9 @@
                     @Html.Label("Основное содержимое")
                     @Html.EditorFor(m => m.Content)
                     @Html.ValidationMessageFor(m => m.Content)
-                </li>                   
+                    }
+                </li>  
+               }              
               
             </ul>
 
