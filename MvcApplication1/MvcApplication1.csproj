@@ -199,6 +199,7 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\PageEditVM.cs" />
+    <Compile Include="Models\PagesListItem.cs" />
     <Compile Include="Models\PagesMenuItem.cs" />
     <Compile Include="Models\NavMenuItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

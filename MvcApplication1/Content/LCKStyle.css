@@ -210,6 +210,26 @@ footer{
     margin-top:-35px;
 }
 
+/*===============TABLES===============*/
+
+
+table{
+    border: 1px solid lightgray;
+    margin: 5px auto;
+    border-collapse:collapse;
+}
+
+td,th{
+    border: 1px solid lightgray;
+    padding:5px;
+}
+
+th{
+    background-color: #e3f2eb;
+}
+
+
+
 /*===============FORMS===============*/
 
  .small_formcontainer{
@@ -220,6 +240,7 @@ footer{
 
 fieldset{
      padding:10px;
+     margin:10px;
  }
 
 legend{
@@ -265,7 +286,7 @@ span.field-validation-error {
 
 
 .danger_area{
-    margin:50px auto 10px auto;
+    margin:50px 10px;
     padding:50px;
     border: 1px solid red;
     background-image: url(/imgs/danger_diag_bg.jpg);

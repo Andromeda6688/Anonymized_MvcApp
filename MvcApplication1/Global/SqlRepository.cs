@@ -23,33 +23,39 @@ namespace MvcApplication1.Models
 
         public Page GetPage(string p_PageName)
         {
-            return DB.Pages.Where(p => (string.Compare(p.Address, p_PageName, true) == 0)).FirstOrDefault();
+            return DB.Pages.Where(p => (string.Compare(p.Address, p_PageName, true) == 0) &&
+                                        p.IsVisible == true )
+                                        .FirstOrDefault();
         }
 
         public Page GetPage(int p_PageId)
         {
-            return DB.Pages.Where(p => (p.Id==p_PageId)).FirstOrDefault();
+            return DB.Pages.Where(p => (p.Id==p_PageId) &&
+                                        p.IsVisible == true )
+                                        .FirstOrDefault();
         }
 
         public List<NavMenuItem> GetNavMenu()
-        {
-            //we should not load all page fields due to performance reasons
+        {            
             List<NavMenuItem> result = (from page in DB.Pages.Where(p => p.ParentId == DB.Pages.FirstOrDefault(m => m.Address == "Index").Id &&
                                                                          p.IsVisible == true &&
-                                                                         p.IsInMenu).ToList()
+                                                                         p.IsInMenu == true)
+                                                             .ToList()
                                         orderby page.DisplayOrder
-                                                                            
-                                        select new NavMenuItem() { Title = page.Title, Address = page.Address }
+
+                                        select new NavMenuItem() { Title = page.Title, Address = page.Address }  //we should not load all page fields due to performance reasons
                                         ).ToList();
 
             return result;
         }
 
-        public List<PagesMenuItem> GetPagesList()
-        {
-            List<PagesMenuItem> result =
-                DB.Pages.Select(p => new PagesMenuItem() { Title = p.Title, Id = p.Id }).ToList();
-
+        public List<PagesListItem> GetPagesList()
+        {            
+            List<PagesListItem> result =    (from page in DB.Pages
+                                            join parentPage in DB.Pages on page.ParentId equals parentPage.Id into outer
+                                             from joinedPage in outer.DefaultIfEmpty()  //LEFT JOIN
+                                             select new PagesListItem(page.Id, page.Title, page.Address, page.IsVisible, page.IsInMenu, joinedPage.Title))
+                                            .ToList();
             return result;
         }
 
@@ -63,7 +69,6 @@ namespace MvcApplication1.Models
             return result;
         }
 
-
         public int CreatePage(
             string p_Title,
             string p_Description,
@@ -71,7 +76,8 @@ namespace MvcApplication1.Models
             string p_Content,
             string p_Address,
             int p_ParentId = 0,
-            bool p_IsVisible = true
+            bool p_IsVisible = true,
+            bool p_IsInMenu = false
             )
         {
             Page _page = new Page
@@ -82,7 +88,8 @@ namespace MvcApplication1.Models
                 Content = p_Content,
                 Address = p_Address,
                 ParentId = p_ParentId,
-                IsVisible = p_IsVisible
+                IsVisible = p_IsVisible,
+                IsInMenu = p_IsInMenu
             };
 
             return CreatePage(_page);
@@ -93,10 +100,25 @@ namespace MvcApplication1.Models
             if (!(String.IsNullOrEmpty(p_Page.Title) &&
                 String.IsNullOrEmpty(p_Page.Address)))
             {
-                DB.Pages.InsertOnSubmit(p_Page);
-                DB.Pages.Context.SubmitChanges();
+                if (string.Compare(p_Page.Address, "Index", true) != 0) // only one "Index" can exist
+                {
+                    if (p_Page.ParentId == null)
+                    {
+                        int IndexId = DB.Pages.Where(p => (p.Address == "Index"))
+                                              .Select(p => p.Id)
+                                              .FirstOrDefault();
+                        p_Page.ParentId = IndexId;
+                    }
 
-                return p_Page.Id;
+                    DB.Pages.InsertOnSubmit(p_Page);
+                    DB.Pages.Context.SubmitChanges();
+
+                    return p_Page.Id;
+                }
+                else
+                {
+                    return 0;
+                }
             }
             else
             {

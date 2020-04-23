@@ -22,7 +22,7 @@ namespace MvcApplication1.Controllers
         {
             SqlRepository repository = new SqlRepository();
 
-            List<PagesMenuItem> model = repository.GetPagesList();
+            List<PagesListItem> model = repository.GetPagesList();
 
             ViewBag.Message = Message;
 
@@ -101,8 +101,6 @@ namespace MvcApplication1.Controllers
 
                 if (result) //deleted
                 {
-                    List<PagesMenuItem> ListModel = repository.GetPagesList();
-
                     return RedirectToAction("PageList", "Administration", new { Message = "Страница успешно удалена" });
                 }
                 else //error

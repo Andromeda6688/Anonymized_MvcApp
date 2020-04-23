@@ -1,4 +1,4 @@
-﻿@model List<MvcApplication1.Models.PagesMenuItem>
+﻿@model List<MvcApplication1.Models.PagesListItem>
 @{
     Layout = "~/Views/Administration/_AdminLayout.cshtml";
 }
@@ -6,6 +6,7 @@
 <h1>Управление страницами</h1>
 <section>
     <fieldset>
+        <legend>Список страниц</legend>
 
             @if (!string.IsNullOrEmpty(ViewBag.Message))
             {
@@ -16,14 +17,36 @@
                 </div>
             }       
 
+            <table class="pagesList">
+                <tr>
+                    <th class="big_cell" width="30%">Заголовок</th>
+                    <th width="14%">Отображать на сайте</th>
+                    <th width="14%">Адрес</th>
+                    <th width="14%">Пункт в меню</th>
+                    <th width="14%">Родительская страница</th>
+                    <th width="14%">Порядок отображения</th>
+                </tr>
+
+
             @foreach (var page in Model)
             {
-                <p>
-                    <a href="@Url.Action("Page", "Administration", new {Id = page.Id})">
-                        @page.Title
-                    </a>
-                </p>
+                <tr>
+                    <td class="big_cell">
+                        <p>
+                            <a href="@Url.Action("Page", "Administration", new {Id = page.Id})">
+                                @page.Title
+                            </a>
+                        </p>
+                    </td>
+                    <td>@page.IsVisible</td>
+                    <td>@page.Address</td>
+                    <td>@page.IsInMenu</td>
+                    <td>@page.Parent</td>
+                    <td>@page.DisplayOrder</td>
+                </tr>
             }
+
+            </table>
             <input class="approve_button" type="button" value="Новая страница"
                    onclick="location.href='@Url.Action("Page", "Administration")'" />
 </fieldset>
