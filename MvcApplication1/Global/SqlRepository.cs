@@ -21,11 +21,23 @@ namespace MvcApplication1.Models
             }
         }
 
-        public Page GetPage(string p_PageName)
+        public Page GetPage(string p_PageName, string p_ParentName)
         {
-            return DB.Pages.Where(p => (string.Compare(p.Address, p_PageName, true) == 0) &&
-                                        p.IsVisible == true )
-                                        .FirstOrDefault();
+            Page result;
+
+            if (string.IsNullOrEmpty(p_ParentName))
+            {
+                p_ParentName="Index";
+            }
+            
+            result = DB.Pages.Where(page => string.Compare(page.Address, p_PageName, true)==0 &&
+                                            DB.Pages.Where(parent => string.Compare(parent.Address, p_ParentName, true) == 0)
+                                                    .Select(parent => parent.Id)
+                                                    .Contains(page.ParentId)
+                            ).FirstOrDefault();
+
+
+            return result;   
         }
 
         public Page GetPage(int p_PageId)
@@ -36,18 +48,33 @@ namespace MvcApplication1.Models
         }
 
         public List<NavMenuItem> GetNavMenu()
-        {            
-            List<NavMenuItem> result = (from page in DB.Pages.Where(p => p.ParentId == DB.Pages.FirstOrDefault(m => m.Address == "Index").Id &&
-                                                                         p.IsVisible == true &&
-                                                                         p.IsInMenu == true)
-                                                             .ToList()
-                                        orderby page.DisplayOrder
-
-                                        select new NavMenuItem() { Title = page.Title, Address = page.Address }  //we should not load all page fields due to performance reasons
-                                        ).ToList();
+        {   
+            List<NavMenuItem> result = DB.Pages.Where(p => string.Compare(p.Address, "Index", true) == 0)
+                                               .Select(p => new NavMenuItem() { Id = p.Id, Title = p.Title, Address = p.Address })
+                                               .ToList();
+            foreach (var page in result)
+            {
+                FillNavMenuItemChildren(page);
+            }
 
             return result;
         }
+
+        //recursion!
+        void FillNavMenuItemChildren(NavMenuItem p_Parent)
+        {
+            p_Parent.Children = DB.Pages.Where(p => p.ParentId == p_Parent.Id)
+                                               .Select(p => new NavMenuItem() { Id = p.Id, Title = p.Title, Address = p.Address })
+                                               .ToList();
+
+            foreach (var page in p_Parent.Children)
+            {
+                FillNavMenuItemChildren(page);
+            }
+
+        }
+
+
 
         public List<PagesListItem> GetPagesList()
         {            
@@ -64,14 +91,14 @@ namespace MvcApplication1.Models
 
             foreach (var child in result)
             {
-                FillChildrenList(child);
+                FillPagesListItemChildren(child);
             } 
 
             return result;
         }
 
         //recursion!
-        void FillChildrenList(PagesListItem p_Parent)
+        void FillPagesListItemChildren(PagesListItem p_Parent)
         {
             p_Parent.Children = DB.Pages.Where(p => p.ParentId == p_Parent.Id)
                                 .Select(p => new PagesListItem(p.Id, p.Title, p.Address, p.IsVisible, p.IsInMenu, p_Parent.Title))
@@ -79,7 +106,7 @@ namespace MvcApplication1.Models
 
             foreach (var child in p_Parent.Children)
             {
-                FillChildrenList(child);
+                FillPagesListItemChildren(child);
             }            
         }
 

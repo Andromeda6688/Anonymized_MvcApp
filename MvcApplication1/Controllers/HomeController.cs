@@ -12,7 +12,7 @@ namespace MvcApplication1.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index(string PageName)
+        public ActionResult Index(string PageName, string ParentName)
         {
             if (String.IsNullOrEmpty(PageName))
             {
@@ -28,7 +28,7 @@ namespace MvcApplication1.Controllers
                 {
                     SqlRepository repository = new SqlRepository();
 
-                    Page pageModel = repository.GetPage(PageName);
+                    Page pageModel = repository.GetPage(PageName, ParentName);
 
                     if (pageModel != null)
                     {                       
@@ -47,23 +47,11 @@ namespace MvcApplication1.Controllers
         public ActionResult NavMenuPartial()
         {
             SqlRepository repository = new SqlRepository();
-
-            //now we need only 1-level menu. perhaps we will change it later
-            //TODO
-            // n-level menu
             
             List<NavMenuItem> model = repository.GetNavMenu();            
 
             return PartialView("_NavMenuPartial", model);  
         }
        
-
-        public ActionResult Test()
-        {
-            ViewBag.Message = "My test text";
-
-            return View();
-        }
-
     }
 }

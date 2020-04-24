@@ -45,6 +45,8 @@ namespace MvcApplication1.Models
             _isVisible = p_IsVisible;
             _isInMenu = p_IsInMenu;
             Parent = p_Parent;
+
+            Children = new List<PagesListItem>();
         }
 
     }

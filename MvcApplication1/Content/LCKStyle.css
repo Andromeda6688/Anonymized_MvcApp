@@ -27,12 +27,15 @@ html, body, wrapper  {
 h1, h2 {
     text-align: center;
 }
+
 h1{
     font-size: 24px;
 }
+
 h2{
     font-size:18px;
 }
+
 h3{
      font-size:18px;
      color: #a69f8d;
@@ -46,8 +49,6 @@ p{
     font-size:14px;
     padding: 5px;
 }
-
-
 
 /*===============HEADER===============*/
 
@@ -67,7 +68,6 @@ header{
     display:table;
     clear:both;
 }
-
 
 .horisontal_line {
     height: 35px;
@@ -124,9 +124,11 @@ header{
     padding:0;
     text-align:right;
 }
+
 #address_div a{
     color:white;
 }
+
 .big_text{
     font-size:x-large;
 }
@@ -140,17 +142,21 @@ header{
   width: 66.667%;
   float: left;
 }
+
 .col-1-3 {
   width: 33.333%;
   float: left;
 }
+
 #main_img_logo {
-    height:350px;
-    background-image: url(/imgs/main_img_draft.jpg);
+   height:350px;
+   background-image: url(/imgs/main_img_draft.jpg);
    background-repeat: repeat-x;
    background-position: center;
    background-color: #0088b0;
 }
+
+/*===============MENU===============*/
 
 nav {   
     padding: 0;
@@ -163,18 +169,42 @@ nav {
 }
 
 nav ul {
-    Margin:0 15px;
+    margin:0 15px;
     padding:0;
     list-style:none;
+    line-height:50px;
 }
-nav li {
+
+nav ul.topmenu li {
     display:inline-block;
-    Margin: 13px 0 12px  20px;
+    margin: 0 10px;
 }
 
 nav li a {
     color:black;
    /* text-decoration:none;*/
+}
+
+.submenu {
+    display: none;
+    position: absolute;
+    background: linear-gradient(0deg, #91969a, #c6ccd1);
+    background-color: #a69f8d;
+    margin: 0;
+    line-height:30px;
+}
+
+.submenu li{
+    margin:0;
+}
+
+.topmenu li:hover > .submenu{
+    display: block;
+}
+
+ul.topmenu li ul.submenu li {
+  clear: both;
+  width: 100%;
 }
 
 /*===============MAIN===============*/
@@ -200,8 +230,6 @@ nav li a {
     -webkit-filter: grayscale(0%);
     filter: grayscale(0%);
 }
-
-
 
 /*===============FOOTER===============*/
 
@@ -231,6 +259,7 @@ th{
 td.parent_cell{
     background-color:#f4f4f4;
 }
+
 td.index_cell{
     background-color:#ebebeb;
 }

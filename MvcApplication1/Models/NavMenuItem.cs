@@ -8,8 +8,17 @@ namespace MvcApplication1.Models
 {
     public class NavMenuItem
     {
-        public string Title;
-        public string Address;
-    }
+        public int Id { get; set; }
+        
+        public string Title { get; set; }
 
+        public string Address { get; set; }
+
+        public List<NavMenuItem> Children { get; set; }
+
+        public NavMenuItem()
+        {
+            Children = new List<NavMenuItem>();
+        }
+    }
 }

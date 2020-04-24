@@ -11,14 +11,7 @@ namespace MvcApplication1
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
-            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-            
-            routes.MapRoute(
-                name: "Solutions",
-                url: "Solutions/{Id}",
-                defaults: new { controller = "Solutions", action = "Index", id = UrlParameter.Optional },
-                constraints: new { id = @"\d+" }
-            );
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");     
 
             routes.MapRoute(
                name: "Administration",
@@ -32,18 +25,16 @@ namespace MvcApplication1
                defaults: new { controller = "Account" }
            );
 
-           
-
-          /*  routes.MapRoute(
-                name: "Test",
-                url: "Test",
-                defaults: new { controller = "Home", action = "Test", PageName = UrlParameter.Optional }
-            );*/
-
             routes.MapRoute(
-                name: "Page",
+                name: "level_1",
                 url: "{PageName}",
                 defaults: new { controller = "Home", action = "Index", PageName = UrlParameter.Optional }
+            );
+            
+            routes.MapRoute(
+                name: "level_2",
+                url: "{ParentName}/{PageName}",
+                defaults: new { controller = "Home", action = "Index", ParentName = UrlParameter.Optional }
             );
 
             routes.MapRoute(
