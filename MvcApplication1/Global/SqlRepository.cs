@@ -100,8 +100,8 @@ namespace MvcApplication1.Models
             if (!(String.IsNullOrEmpty(p_Page.Title) &&
                 String.IsNullOrEmpty(p_Page.Address)))
             {
-                if (string.Compare(p_Page.Address, "Index", true) != 0) // only one "Index" can exist
-                {
+                if (IsAddressUnique(p_Page))
+	            {
                     if (p_Page.ParentId == null)
                     {
                         int IndexId = DB.Pages.Where(p => (p.Address == "Index"))
@@ -114,7 +114,7 @@ namespace MvcApplication1.Models
                     DB.Pages.Context.SubmitChanges();
 
                     return p_Page.Id;
-                }
+                }            
                 else
                 {
                     return 0;
@@ -132,10 +132,32 @@ namespace MvcApplication1.Models
 
             if (changingPage!=null)
             {
-                UpdatePage(p_Page.Id, p_Page.Title, p_Page.Description, p_Page.Keywords, 
-                    p_Page.Content, p_Page.Address, p_Page.ParentId, p_Page.IsVisible);
+                if (string.Compare(p_Page.Address, "Index", true)!=0 )
+                {
+                    if (IsAddressUnique(p_Page))
+                    {
+                        changingPage.Title = p_Page.Title;
+                        changingPage.Description = p_Page.Description;
+                        changingPage.Keywords = p_Page.Keywords;
+                        changingPage.Content = p_Page.Content;
+                        changingPage.ParentId = p_Page.ParentId;
+                        changingPage.Address = p_Page.Address;
+                        changingPage.IsVisible = p_Page.IsVisible;
 
-                return true;
+                        DB.SubmitChanges();
+
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    } 
+                    
+                }
+                else
+                {
+                    return false;
+                }  
             }
             else
             {
@@ -151,22 +173,24 @@ namespace MvcApplication1.Models
             string p_Content,
             string p_Address,
             int p_ParentId = 0,
-            bool p_IsVisible = true
+            bool p_IsVisible = true,
+            bool p_IsInMenu = false
             )
         {
-            Page changingPage = DB.Pages.FirstOrDefault(p => p.Id == p_Id);            
+            Page _page = new Page()
+            {
+                Id = p_Id,
+                Title = p_Title,
+                Description = p_Description,
+                Keywords = p_Keywords,
+                Content = p_Content,
+                Address = p_Address,
+                ParentId = p_ParentId,
+                IsVisible = p_IsVisible,
+                IsInMenu = p_IsInMenu
+            };
 
-            changingPage.Title = p_Title;
-            changingPage.Description = p_Description;
-            changingPage.Keywords = p_Keywords;
-            changingPage.Content = p_Content;
-            changingPage.ParentId = p_ParentId;
-            changingPage.Address = p_Address;
-            changingPage.IsVisible = p_IsVisible;
-
-            DB.SubmitChanges();
-
-            return true;  
+            return UpdatePage(_page);           
         }       
 
         public bool RemovePage(int p_Id)
@@ -186,6 +210,16 @@ namespace MvcApplication1.Models
             }
 
             return _result;
+        }
+
+        bool IsAddressUnique(Page p_Page)
+        {
+            int count = DB.Pages.Where(p => string.Compare(p.Address, p_Page.Address, true) == 0 &&
+                                            p.ParentId == p_Page.ParentId &&
+                                            p.Id != p_Page.Id )
+                                .Count();
+            
+            return (count > 0) ? false : true;            
         }
 
 

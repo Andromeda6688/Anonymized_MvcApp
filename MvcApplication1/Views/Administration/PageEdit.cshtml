@@ -35,7 +35,8 @@
             </ul>
     </fieldset>
     
-    if (string.Compare(Model.Page.Address, "Index", true) != 0)
+    if (!(string.Compare(Model.Page.Address.Trim(), "Index", true) == 0
+        && Model.Page.ParentId==0))
     {
         <fieldset>
                 <legend>Показывать на сайте</legend>

@@ -15,9 +15,19 @@ namespace MvcApplication1.Models
         {
             Page = p_page;
 
+            FillParents();
+        }
+
+        public PageEditVM()
+        {
+            FillParents();
+        }
+
+        void FillParents()
+        {
             SqlRepository repository = new SqlRepository();
 
-             Parents = repository.GetParentsList();
+            Parents = repository.GetParentsList();
         }
 
     }
