@@ -228,6 +228,13 @@ th{
     background-color: #e3f2eb;
 }
 
+td.parent_cell{
+    background-color:#f4f4f4;
+}
+td.index_cell{
+    background-color:#ebebeb;
+}
+
 
 
 /*===============FORMS===============*/

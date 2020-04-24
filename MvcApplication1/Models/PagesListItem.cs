@@ -35,6 +35,8 @@ namespace MvcApplication1.Models
 
         public string Parent { get; set; }
 
+        public List<PagesListItem> Children { get; set; }
+
         public PagesListItem(int p_id, string p_Title, string p_Address, bool p_IsVisible, bool p_IsInMenu, string p_Parent)
         {
             Id = p_id;

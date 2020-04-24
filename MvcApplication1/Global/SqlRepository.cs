@@ -51,12 +51,36 @@ namespace MvcApplication1.Models
 
         public List<PagesListItem> GetPagesList()
         {            
-            List<PagesListItem> result =    (from page in DB.Pages
+           /* List<PagesListItem> result =    (from page in DB.Pages
                                             join parentPage in DB.Pages on page.ParentId equals parentPage.Id into outer
                                              from joinedPage in outer.DefaultIfEmpty()  //LEFT JOIN
                                              select new PagesListItem(page.Id, page.Title, page.Address, page.IsVisible, page.IsInMenu, joinedPage.Title))
-                                            .ToList();
+                                            .ToList();*/
+
+            //looking for "Index"
+            List<PagesListItem> result = DB.Pages.Where(p => string.Compare(p.Address, "Index", true) == 0)
+                                           .Select(p => new PagesListItem(p.Id, p.Title, p.Address, p.IsVisible, p.IsInMenu, null))
+                                           .ToList();
+
+            foreach (var child in result)
+            {
+                FillChildrenList(child);
+            } 
+
             return result;
+        }
+
+        //recursion!
+        void FillChildrenList(PagesListItem p_Parent)
+        {
+            p_Parent.Children = DB.Pages.Where(p => p.ParentId == p_Parent.Id)
+                                .Select(p => new PagesListItem(p.Id, p.Title, p.Address, p.IsVisible, p.IsInMenu, p_Parent.Title))
+                                .ToList();
+
+            foreach (var child in p_Parent.Children)
+            {
+                FillChildrenList(child);
+            }            
         }
 
         public List<PagesMenuItem> GetParentsList()
