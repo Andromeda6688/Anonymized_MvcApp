@@ -9,8 +9,8 @@
         {
             if (page.Children.Count > 0)
             {
-                <li>
-                    <a href="~/@page.Address">@page.Title</a>
+                <li class="has_children">
+                    <a href="~/@page.Address">@page.Title &#129047;</a>
                     <ul class="submenu">
                         @foreach (var child in page.Children)
                         {

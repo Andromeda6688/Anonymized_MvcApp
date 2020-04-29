@@ -589,6 +589,7 @@
     <Content Include="Views\Administration\PageList.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\tinymce_full_compressed.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\tinymce_full.cshtml" />
+    <Content Include="Views\Home\Shubin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="imgs\" />

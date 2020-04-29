@@ -24,6 +24,10 @@ namespace MvcApplication1.Controllers
                 {
                     return View("Index");
                 }
+                else if (string.Compare(PageName, "Shubin", true) == 0)
+                {
+                    return View("Shubin");
+                }
                 else
                 {
                     SqlRepository repository = new SqlRepository();
