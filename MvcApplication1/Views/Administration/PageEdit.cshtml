@@ -33,62 +33,59 @@
                     @Html.ValidationMessageFor(m => m.Page.Keywords)
                 </li>
             </ul>
-    </fieldset>
+    </fieldset>  
     
-    if (!(string.Compare(Model.Page.Address.Trim(), "Index", true) == 0
-        && Model.Page.ParentId==0))
-    {
-        <fieldset>
-                <legend>Показывать на сайте</legend>
-                <ul>
-                    <li>
-                        @Html.Label("Адрес (псевдоним)")
-                        @Html.TextBoxFor(m => m.Page.Address)
-                        @Html.ValidationMessageFor(m => m.Page.Address)
-                    </li>
-                    <li>
-                        @Html.Label("Отобразить / скрыть")
-                        @Html.CheckBoxFor(m => m.Page.IsVisible)
-                        @Html.ValidationMessageFor(m => m.Page.IsVisible)
-                    </li>
-                    </ul>
-        </fieldset>
-                    
-        <fieldset>
-                <legend>Меню</legend>
-                <ul>
-                <li>
-                    @Html.Label("Пункт в меню")
-                    @Html.CheckBoxFor(m => m.Page.IsInMenu)
-                    @Html.ValidationMessageFor(m => m.Page.IsInMenu)
-                </li>
-                    
-                <li>
-                    @Html.Label("Родительская страница")
-                    @Html.DropDownListFor((m => m.Page.ParentId), 
-                        new SelectList(Model.Parents, "Id", "Title"))
-                </li>
-                <li>
-                    @Html.Label("Порядок отображения")
-                    @Html.TextBoxFor(m => m.Page.DisplayOrder)
-                    @Html.ValidationMessageFor(m => m.Page.DisplayOrder)
-                </li>
-               
-            </ul>
+    <fieldset>
+        <legend>Показывать на сайте</legend>
+        <ul>
+            <li>
+                @Html.Label("Адрес (псевдоним)")
+                @Html.TextBoxFor(m => m.Page.Address)
+                @Html.ValidationMessageFor(m => m.Page.Address)
+            </li>
+            <li>
+                @Html.Label("Отобразить / скрыть")
+                @Html.CheckBoxFor(m => m.Page.IsVisible)
+                @Html.ValidationMessageFor(m => m.Page.IsVisible)
+            </li>
+        </ul>
     </fieldset>
-    
+                    
+    <fieldset>
+        <legend>Меню</legend>
+        <ul>
+            <li>
+                @Html.Label("Пункт в меню")
+                @Html.CheckBoxFor(m => m.Page.IsInMenu)
+                @Html.ValidationMessageFor(m => m.Page.IsInMenu)
+            </li>
+                    
+            <li>
+                @Html.Label("Родительская страница")
+                @Html.DropDownListFor((m => m.Page.ParentId), 
+                    new SelectList(Model.Parents, "Id", "Title"))
+            </li>
+            <li>
+                @Html.Label("Порядок отображения")
+                @Html.TextBoxFor(m => m.Page.DisplayOrder)
+                @Html.ValidationMessageFor(m => m.Page.DisplayOrder)
+            </li> 
+        </ul>
+    </fieldset>
+
+
      <fieldset>
         <legend>Основное содержимое</legend>
          @Html.EditorFor(m => m.Page.Content)
     </fieldset>
-    }
+
 
     <div class="buttons">
         <input class="approve_button" type="submit" value="Сохранить" />
         <input class="cancel_button" type="button" value="Отменить"
-                onclick="location.href='@Url.Action("Page", "Administration")'" />
+                onclick="location.href='@Url.Action("PageList", "Administration")'" />
     </div>
-    
+}
     
     <fieldset class="danger_area">
         @Html.ActionLink("Удалить страницу", "DeletePage", "Administration",

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @RenderSection("SEO", required: false)
     <link rel="stylesheet" type="text/css" href="/Content/LCKStyle.css">
     @RenderSection("Scripts", required: false)    
 </head>
@@ -14,7 +14,7 @@
                 <div class="horisontal_line_item">
                     <a href="~/Admin"><img src="/imgs/menu_pic.png" width="34px" height="34px" /></a>
                 </div>
-                @{Html.RenderAction("CurrentUserPartial", "Account");    }
+                @{Html.RenderAction("CurrentUserPartial", "Account");}
             </div>
             <div class="container">
                

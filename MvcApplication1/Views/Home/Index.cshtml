@@ -1,8 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@model MvcApplication1.Global.Page
+<!DOCTYPE html>
 <html>
 <head>
     <title>testPage</title>
     <link rel="stylesheet" type="text/css" href="/Content/LCKStyle.css">
+    <title>@Model.Title</title>
+    <meta name="description" content="@Model.Description" />
+    <meta name="keywords" content="@Model.Keywords" />
+    
 </head>
 <body>
     <div class="wrapper">
@@ -15,29 +20,27 @@
                 @{Html.RenderAction("CurrentUserPartial", "Account");    }
             </div>
             <div class="container">
-                
-                    <div id="info_line">
-                        <div id="logo_div" class="col-2-3">
-                            <a href="@Url.Action("Index", "Home", new { PageName=""})"><img id="logo" src="/imgs/LOGO_white.png" /></a>
-                        </div>
-                        <div class="col-1-3">
-                            <div id="address_div">
-                                <p>(4842)<span class="big_text"> 77-00-44</span></p>
-                                <p><a href="mailto:zakaz@lc-kaluga.ru">zakaz@lc-kaluga.ru</a></p>
-                            </div>
+                <div id="info_line">
+                    <div id="logo_div" class="col-2-3">
+                        <a href="@Url.Action("Index", "Home", new { PageName=""})"><img id="logo" src="/imgs/LOGO_white.png" /></a>
+                    </div>
+                    <div class="col-1-3">
+                        <div id="address_div">
+                            <p>(4842)<span class="big_text"> 77-00-44</span></p>
+                            <p><a href="mailto:zakaz@lc-kaluga.ru">zakaz@lc-kaluga.ru</a></p>
                         </div>
                     </div>
-                    <nav>
-                        @{Html.RenderAction("NavMenuPartial", "Home");    }
-                    </nav>
-                    <div class="main_img"> </div>
-                
+                </div>
+                <nav>
+                    @{Html.RenderAction("NavMenuPartial", "Home");    }
+                </nav>
+                <div class="main_img"> </div>
             </div>
-</header>
+        </header>
 
         <!--PAGE-->
         <div class="main">
-            
+            <!--
                 <div class="vendor-item">
                     <img class="partner_logo" src="/imgs/partners_logo/acer.jpg" alt="Acer" />
                 </div>
@@ -164,7 +167,8 @@
                 <div class="vendor-item">
                     <img class="partner_logo" src="/imgs/partners_logo/zebra.jpg" alt="Zebra" />
                 </div>
-            
+            -->
+            @Html.Raw(Model.Content)
 
             <div class="buffer"></div>
         </div>

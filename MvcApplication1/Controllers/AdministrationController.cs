@@ -16,7 +16,7 @@ namespace MvcApplication1.Controllers
 
         public ActionResult Index()
         {
-            return Redirect("Admin/PageList");
+            return RedirectToAction("PageList", "Administration"); //Admin/PageList
         }
 
         public ActionResult PageList(string Message)
@@ -37,6 +37,8 @@ namespace MvcApplication1.Controllers
             if (string.IsNullOrEmpty(Id))//new
             {
                  _page = new Page();
+
+                 ViewBag.IsIndex = false;
             }
             else
             {
@@ -47,12 +49,33 @@ namespace MvcApplication1.Controllers
                 _page = repository.GetPage(pageID);                
 
                 ViewBag.Message = Message;
-                
             }
 
-            PageEditVM _VM = new PageEditVM(_page);
+            if (string.Compare(_page.Address, "Index", true)==0)
+            {
+                return RedirectToAction("IndexEdit", "Administration"); //Admin/IndexEdit
+            }
+            else
+            {
+                PageEditVM _VM = new PageEditVM(_page);
 
-            return View("PageEdit", _VM);
+                return View("PageEdit", _VM);
+            }            
+        }
+
+
+        public ActionResult IndexEdit(string Message)
+        {
+            Page _page;
+
+            SqlRepository repository = new SqlRepository();
+
+            _page = repository.GetPage("Index", null);
+
+            ViewBag.Message = Message;
+
+            return View("IndexEdit", _page);
+           
         }
 
         [HttpPost]
@@ -113,6 +136,60 @@ namespace MvcApplication1.Controllers
             }            
             
             return View("PageEdit", model);            
+        }
+
+        [HttpPost]
+        public ActionResult IndexEdit(Page model)
+        {
+           if (string.IsNullOrEmpty(model.Title))
+	       {
+               ModelState.AddModelError("Title", "Пустой заголовок");
+	       }
+           else if (model.Title.Length>60)
+	       {
+               ModelState.AddModelError("Title", "Длина не более 60 символов");
+	       }
+            if (!string.IsNullOrEmpty(model.Keywords) )
+	        {
+                if (model.Keywords.Length<160)
+	            {
+		            ModelState.AddModelError("Keywords", "Длина не более 160 символов");
+	            }                
+	        }
+            if (!string.IsNullOrEmpty(model.Description))
+	        {
+                if (model.Description.Length<160)
+	            {
+		            ModelState.AddModelError("Keywords", "Длина не более 160 символов");
+	            }                
+	        }
+
+            ModelState["Address"].Errors.Clear();
+
+            if (ModelState.IsValid)
+            {
+                model.Address = "Index";
+                model.ParentId = 0;
+                model.DisplayOrder = 0;
+
+                SqlRepository repository = new SqlRepository();
+                bool result = repository.UpdatePage(model);
+
+                if (result)
+                {
+                    ViewBag.Message = "Изменения успешно сохранены";
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Ошибка сохранения");
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Изменения не сохранены");
+            }
+
+            return View("IndexEdit", model);
         }
 
         public ActionResult DeletePage(bool confirm, int pageId)

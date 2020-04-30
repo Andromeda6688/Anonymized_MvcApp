@@ -16,13 +16,21 @@ namespace MvcApplication1.Controllers
         {
             if (String.IsNullOrEmpty(PageName))
             {
-                return View("Index");
+                SqlRepository repository = new SqlRepository();
+
+                Page pageModel = repository.GetPage("Index", null);
+
+                return View("Index", pageModel);
             }
             else
             {
                 if (string.Compare(PageName, "Index", true) == 0)
                 {
-                    return View("Index");
+                    SqlRepository repository = new SqlRepository();
+
+                    Page pageModel = repository.GetPage("Index", null);
+
+                    return View("Index", pageModel);
                 }
                 else if (string.Compare(PageName, "Shubin", true) == 0)
                 {

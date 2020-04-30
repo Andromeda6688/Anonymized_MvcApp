@@ -25,18 +25,23 @@ namespace MvcApplication1.Models
         {
             Page result;
 
-            if (string.IsNullOrEmpty(p_ParentName))
+            if (string.Compare(p_PageName, "Index", true)==0)
             {
-                p_ParentName="Index";
+                result = DB.Pages.FirstOrDefault(p => string.Compare(p.Address, "Index") == 0);
             }
+            else
+            { 
+                if (string.IsNullOrEmpty(p_ParentName))
+                {
+                    p_ParentName="Index";
+                }
             
-            result = DB.Pages.Where(page => string.Compare(page.Address, p_PageName, true)==0 &&
-                                            DB.Pages.Where(parent => string.Compare(parent.Address, p_ParentName, true) == 0)
-                                                    .Select(parent => parent.Id)
-                                                    .Contains(page.ParentId)
-                            ).FirstOrDefault();
-
-
+                result = DB.Pages.Where(page => string.Compare(page.Address, p_PageName, true)==0 &&
+                                                DB.Pages.Where(parent => string.Compare(parent.Address, p_ParentName, true) == 0)
+                                                        .Select(parent => parent.Id)
+                                                        .Contains(page.ParentId)
+                                ).FirstOrDefault();
+            }
             return result;   
         }
 
@@ -179,12 +184,12 @@ namespace MvcApplication1.Models
 
         public bool UpdatePage(Page p_Page)
         {
-            Page changingPage = DB.Pages.FirstOrDefault(p => p.Id == p_Page.Id);
-
-            if (changingPage!=null)
+            if (string.Compare(p_Page.Address, "Index", true)!=0)
             {
-                if (string.Compare(p_Page.Address, "Index", true)!=0 )
-                {
+                Page changingPage = DB.Pages.FirstOrDefault(p => p.Id == p_Page.Id);
+
+                if (changingPage != null)
+                {                   
                     if (IsAddressUnique(p_Page))
                     {
                         changingPage.Title = p_Page.Title;
@@ -202,18 +207,30 @@ namespace MvcApplication1.Models
                     else
                     {
                         return false;
-                    } 
-                    
+                    }
                 }
                 else
                 {
                     return false;
-                }  
+                }
+            }
+            else if (p_Page.ParentId == 0) //Index
+            {
+                Page changingPage = DB.Pages.FirstOrDefault(p => p.Address == p_Page.Address && p.ParentId == 0);
+
+                changingPage.Title = p_Page.Title;
+                changingPage.Description = p_Page.Description;
+                changingPage.Keywords = p_Page.Keywords;
+                changingPage.Content = p_Page.Content;                    
+
+                DB.SubmitChanges();
+
+                return true;
             }
             else
             {
                 return false;
-            }
+            } 
         }
 
         public bool UpdatePage(
@@ -272,12 +289,5 @@ namespace MvcApplication1.Models
             
             return (count > 0) ? false : true;            
         }
-
-
-
-
-
-
-
     }
 }

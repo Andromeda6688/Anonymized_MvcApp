@@ -590,6 +590,7 @@
     <Content Include="Views\Shared\EditorTemplates\tinymce_full_compressed.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\tinymce_full.cshtml" />
     <Content Include="Views\Home\Shubin.cshtml" />
+    <Content Include="Views\Administration\IndexEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="imgs\" />

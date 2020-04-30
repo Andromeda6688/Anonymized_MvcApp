@@ -31,53 +31,54 @@
             @foreach (var index in Model)//index
             {
                 <tr>
-                    <td class="index_cell">
+                    <td >
                         <p>
                             <a href="@Url.Action("Page", "Administration", new { Id = index.Id })">
                                 @index.Title
                             </a>
                         </p>
                     </td>
-                    <td class="index_cell">@index.IsVisible</td>
-                    <td class="index_cell">@index.Address</td>
-                    <td class="index_cell">@index.IsInMenu</td>
-                    <td class="index_cell">@index.Parent</td>
-                    <td class="index_cell">@index.DisplayOrder</td>
+                    <td>@index.IsVisible</td>
+                    <td>@index.Address</td>
+                    <td>@index.IsInMenu</td>
+                    <td>@index.Parent</td>
+                    <td>@index.DisplayOrder</td>
                 </tr>
                 
                 
                 foreach (var parent in index.Children)//parents
                 {
                     <tr>
-                        <td class="parent_cell">
-                            <p>
+                        <td>
+                            <p>&nbsp;&nbsp;
                                 <a href="@Url.Action("Page", "Administration", new { Id = parent.Id })">
-                                    @parent.Title
+                                     @parent.Title
                                 </a>
                             </p>
                         </td>
-                        <td class="parent_cell">@parent.IsVisible</td>
-                        <td class="parent_cell">@parent.Address</td>
-                        <td class="parent_cell">@parent.IsInMenu</td>
-                        <td class="parent_cell">@parent.Parent</td>
-                        <td class="parent_cell">@parent.DisplayOrder</td>
+                        <td>@parent.IsVisible</td>
+                        <td>@parent.Address</td>
+                        <td>@parent.IsInMenu</td>
+                        <td>@parent.Parent</td>
+                        <td>@parent.DisplayOrder</td>
                     </tr>
                 
                     foreach (var child in parent.Children) // children
                     {
                         <tr>
-                        <td>
-                            <p>
-                                <a href="@Url.Action("Page", "Administration", new { Id = child.Id })">
-                                    @child.Title
-                                </a>
-                            </p>
-                        </td>
-                        <td>@child.IsVisible</td>
-                        <td>@child.Address</td>
-                        <td>@child.IsInMenu</td>
-                        <td>@child.Parent</td>
-                        <td>@child.DisplayOrder</td>
+                            <td class="child_cell">
+                                <p>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a href="@Url.Action("Page", "Administration", new { Id = child.Id })">
+                                        @child.Title
+                                    </a>
+                                </p>
+                            </td>
+                            <td class="child_cell">@child.IsVisible</td>
+                            <td class="child_cell">@child.Address</td>
+                            <td class="child_cell">@child.IsInMenu</td>
+                            <td class="child_cell">@child.Parent</td>
+                            <td class="child_cell">@child.DisplayOrder</td>
                     </tr>                    
                     }
                 }

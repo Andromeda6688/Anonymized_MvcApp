@@ -2,9 +2,13 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section SEO {
+    <title>@Model.Title</title>
+    <meta name="description" content="@Model.Description" />
+    <meta name="keywords" content="@Model.Keywords" />
+}
 
 <div>    
-        <h1>@Model.Title</h1>
-        @Model.Content
-
+    <h1>@Model.Title</h1>
+    @Html.Raw(Model.Content)
 </div>
