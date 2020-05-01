@@ -125,9 +125,7 @@ namespace MvcApplication1.Controllers
                         roles.CreateRole("Author");
                     }
 
-                    roles.AddUsersToRoles(new[] { model.Email }, new[] { "Author" });                    
-                    
-                   // WebSecurity.Login(model.Email, model.Password);
+                    roles.AddUsersToRoles(new[] { model.Email }, new[] { "Author" }); 
                     
                     return RedirectToAction("Index", "Home");
                     
@@ -177,8 +175,9 @@ namespace MvcApplication1.Controllers
             UsersContext context = new UsersContext();
             int _id = Convert.ToInt32(Id);
             User response =
-                context.Users.FirstOrDefault(u => u.Id == _id );           
+                context.Users.FirstOrDefault(u => u.Id == _id );
 
+            
             var RoleProvider = (SimpleRoleProvider)Roles.Provider;
             var roles = RoleProvider.GetRolesForUser(response.Email).ToList();
 
@@ -190,7 +189,7 @@ namespace MvcApplication1.Controllers
                 IsActive = response.IsActive,
                 IsAdmin = roles.Contains("Admin")
             };
-
+           
             ViewBag.Message = message;
             
             return View("Manage", model);
@@ -209,51 +208,57 @@ namespace MvcApplication1.Controllers
                 User response =
                     context.Users.FirstOrDefault(u => u.Id == _id);
 
-                //update data
-                if (string.Compare(response.Name, model.Name, false)!=0 
-                    ||response.IsActive != model.IsActive)
+                if (string.Compare(response.Email, "SuperAdmin", true) != 0)
                 {
-                    response.Name = model.Name;
-                    response.IsActive = model.IsActive;
 
-                    context.SaveChanges();
-                }
-                
-                //update roles
-                var roles = (SimpleRoleProvider)Roles.Provider;
-                var membership = (SimpleMembershipProvider)Membership.Provider;
+                    //update data
+                    if (string.Compare(response.Name, model.Name, false) != 0
+                        || response.IsActive != model.IsActive)
+                    {
+                        response.Name = model.Name;
+                        response.IsActive = model.IsActive;
 
-                if (model.IsAdmin)
-                {
-                    if (!roles.GetRolesForUser(response.Email).Contains("Admin"))
-                    {
-                        Roles.AddUserToRole(response.Email, "Admin");
+                        context.SaveChanges();
                     }
-                }
-                else
-                {
-                    if (roles.GetRolesForUser(response.Email).Contains("Admin"))
+
+                    //update roles
+                    var roles = (SimpleRoleProvider)Roles.Provider;
+                    var membership = (SimpleMembershipProvider)Membership.Provider;
+
+                    if (model.IsAdmin)
                     {
-                        Roles.RemoveUserFromRole(response.Email, "Admin");
+                        if (!roles.GetRolesForUser(response.Email).Contains("Admin"))
+                        {
+                            Roles.AddUserToRole(response.Email, "Admin");
+                        }
                     }
+                    else
+                    {
+                        if (roles.GetRolesForUser(response.Email).Contains("Admin"))
+                        {
+                            Roles.RemoveUserFromRole(response.Email, "Admin");
+                        }
+                    }
+
+                    if (model.IsActive)
+                    {
+                        if (!roles.GetRolesForUser(response.Email).Contains("Author"))
+                        {
+                            Roles.AddUserToRole(response.Email, "Author");
+                        }
+                    }
+                    else
+                    {
+                        if (roles.GetRolesForUser(response.Email).Contains("Author"))
+                        {
+                            Roles.RemoveUserFromRole(response.Email, "Author");
+                        }
+                    }
+
+                    return RedirectToAction("Manage", new { Id = model.Id, message = "Аккаунт успешно обновлен" });
                 }
 
-                if (model.IsActive)
-                {
-                    if (!roles.GetRolesForUser(response.Email).Contains("Author"))
-                    {
-                        Roles.AddUserToRole(response.Email, "Author");
-                    }
-                }
-                else
-                {
-                    if (roles.GetRolesForUser(response.Email).Contains("Author"))
-                    {
-                        Roles.RemoveUserFromRole(response.Email, "Author");
-                    }
-                }
-
-                return RedirectToAction("Manage", new {Id = model.Id, message = "Аккаунт успешно обновлен" });
+                ModelState.AddModelError("", "Аккаунт SuperAdmin изменять нельзя"); 
             }
             else
             {
@@ -292,22 +297,34 @@ namespace MvcApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool IsChanged = WebSecurity.ChangePassword(model.Email, model.OldPassword, model.NewPassword);
-            
-            
-                if (IsChanged)
-                {
-                    string _message = "Пароль успешно изменен";
+                UsersContext context = new UsersContext();
+                int _id = Convert.ToInt32(model.Id);
+                User response =
+                    context.Users.FirstOrDefault(u => u.Id == _id);
 
-                    return RedirectToAction("ChangePassword", "Account", new { Id = model.Id, message = _message });
+                if (string.Compare(response.Email, "SuperAdmin", true) != 0)
+                {
+
+                    bool IsChanged = WebSecurity.ChangePassword(model.Email, model.OldPassword, model.NewPassword);
+            
+            
+                    if (IsChanged)
+                    {
+                        string _message = "Пароль успешно изменен";
+
+                        return RedirectToAction("ChangePassword", "Account", new { Id = model.Id, message = _message });
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Ошибка! Неверный текущий пароль?");  
+                    }                
+
+                    return View("ChangePassword", model);
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Ошибка! Неверный текущий пароль?");  
-                }                
-
-                return View("ChangePassword", model);
-
+                    ModelState.AddModelError("", "Пароль для SuperAdmin изменять нельзя"); 
+                }
             }
             else
             {

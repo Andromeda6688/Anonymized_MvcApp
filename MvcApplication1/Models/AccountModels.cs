@@ -97,22 +97,6 @@ namespace MvcApplication1.Models
         [Required]
         [Display(Name = "Админские права")]
         public bool IsAdmin { get; set; }
-
-    /*  [Required]
-        [DataType(DataType.Password)]
-        [Display(Name = "Старый пароль")]
-        public string OldPassword { get; set; }
-
-        [Required]
-        [DataType(DataType.Password)]
-        [Display(Name = "Новый пароль")]
-        [StringLength(100, ErrorMessage = "Не менее 6 и не более 100 знаков", MinimumLength = 6)]
-        public string NewPassword { get; set; }
-
-        [Required]
-        [DataType(DataType.Password)]
-        [Display(Name = "Подтвердить пароль")]
-        public string ConfirmPassword { get; set; }*/
     }
 
 

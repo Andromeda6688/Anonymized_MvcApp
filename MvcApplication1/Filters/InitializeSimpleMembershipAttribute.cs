@@ -42,21 +42,26 @@ namespace MvcApplication1.Filters
 
                     WebSecurity.InitializeDatabaseConnection("WebSiteDBConnectionString", "Users", "Id", "Email", autoCreateTables: true);
 
-                 /*   var roles = (SimpleRoleProvider)Roles.Provider;
+                    //we create SuperAdmin for sake of occasional delete of all other users
+                    var roles = (SimpleRoleProvider)Roles.Provider;
                     var membership = (SimpleMembershipProvider)Membership.Provider;
 
                     if (!roles.RoleExists("Admin"))
                     {
                         roles.CreateRole("Admin");
                     }
-                    if (membership.GetUser("Admin", false) == null)
+                    if (membership.GetUser("SuperAdmin", false) == null)
                     {
-                        membership.CreateUserAndAccount("Admin", "SuperAdminPassword");
+                        membership.CreateUserAndAccount("SuperAdmin", "SecretSuperAdminPassword");
                     }
-                    if (!roles.GetRolesForUser("Admin").Contains("Admin"))
+                    if (!roles.GetRolesForUser("SuperAdmin").Contains("Admin"))
                     {
-                        roles.AddUsersToRoles(new[] { "Admin" }, new[] { "Admin" });
-                    }*/
+                        roles.AddUsersToRoles(new[] { "SuperAdmin" }, new[] { "Admin" });
+                    }
+                    if (!roles.GetRolesForUser("SuperAdmin").Contains("Author"))
+                    {
+                        roles.AddUsersToRoles(new[] { "SuperAdmin" }, new[] { "Author" });
+                    }
                 }
                 catch (Exception ex)
                 {
