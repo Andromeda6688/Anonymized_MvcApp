@@ -1,0 +1,54 @@
+﻿@model List<MvcApplication1.Models.UserListItem>
+@{
+    Layout = "~/Views/Administration/_AdminLayout.cshtml";
+}
+
+<h1>Управление страницами</h1>
+<section>
+    <fieldset>
+        <legend>Список страниц</legend>
+
+            @if (!string.IsNullOrEmpty(ViewBag.Message))
+            {
+                <div class="validation-summary-errors">
+                    <ul>
+                        <li> @ViewBag.Message</li>
+                    </ul>
+                </div>
+            }       
+
+        <table class="admin_list">
+            <tr>
+                <td class="big_cell" width="25%">Логин / E-mail</td>
+                <td width="15%">Имя</td>
+                <td width="15%">Администратор?</td>
+                <td width="15%">Аккаунт активен?</td>
+                <td width="30%">Действия</td>
+            </tr>
+
+
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>
+                        <p> @user.Email</p>
+                    </td>
+                    <td>@user.Name</td>
+                    <td>@user.IsAdmin</td>
+                    <td>@user.IsActive</td>
+                    <td>
+                        <input class="approve_button" type="button" value="Управление"
+                               onclick="location.href='@Url.Action("Manage", "Account", new {Id = user.Id })'" />
+                        &nbsp;
+                        <input class="approve_button" type="button" value="Смена пароля"
+                               onclick="location.href='@Url.Action("ChangePassword", "Account", new { Id = user.Id })'" />
+                    </td>
+                </tr>
+            }
+
+        </table>
+        <input class="approve_button" type="button" value="Новый пользователь"
+            onclick="location.href='@Url.Action("Register", "Account")'" />
+</fieldset>
+</section>
+

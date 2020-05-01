@@ -20,9 +20,9 @@ namespace MvcApplication1
            );
 
             routes.MapRoute(
-               name: "Login",
-               url: "Account/{action}",
-               defaults: new { controller = "Account" }
+               name: "Account",
+               url: "Account/{action}/{Id}",
+               defaults: new { controller = "Account", action = "UserList", Id = UrlParameter.Optional }
            );
 
             routes.MapRoute(

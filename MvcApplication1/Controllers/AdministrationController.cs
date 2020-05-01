@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace MvcApplication1.Controllers
 {
+    [Authorize]
     public class AdministrationController : Controller
     {
         //
@@ -110,7 +111,6 @@ namespace MvcApplication1.Controllers
 
                     else // modifying existing page
                     {
-                        model.Page.Id = Convert.ToInt32(Id);
                         SqlRepository repository = new SqlRepository();
                         bool result = repository.UpdatePage(model.Page);
 
@@ -217,7 +217,7 @@ namespace MvcApplication1.Controllers
         {
             List<NavMenuItem> model = new List<NavMenuItem>()
             { new NavMenuItem() { Title = "Страницы", Address = "Admin/PageList" },
-              new NavMenuItem() { Title = "Пользователи", Address = "Admin/User"}
+              new NavMenuItem() { Title = "Пользователи", Address = "Account/UserList"}
             };
 
             return PartialView("_AdminMenuPartial", model);

@@ -5,7 +5,9 @@
 
 
 <h1>Редактирование страницы</h1>
-
+<script src="~/Scripts/jquery-1.8.2.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <section>
        
 @using (Html.BeginForm())
@@ -16,6 +18,7 @@
      <fieldset>
         <legend>SEO</legend>
             <ul>
+                 @Html.EditorFor(m => m.Page.Id)               
                 <li>
                     @Html.Label("Заголовок")
                     @Html.TextBoxFor(m=> m.Page.Title)

@@ -291,6 +291,9 @@ table{
     margin: 5px auto;
     border-collapse:collapse;
 }
+table.admin_list{
+    width:100%;
+}
 
 td,th{
     border: 1px solid lightgray;
@@ -304,6 +307,8 @@ th{
 td.child_cell{
     background-color:#f9f9f9;
 }
+
+
 
 /*===============FORMS===============*/
 

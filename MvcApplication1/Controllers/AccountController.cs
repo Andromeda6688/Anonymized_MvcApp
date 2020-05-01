@@ -47,7 +47,6 @@ namespace MvcApplication1.Controllers
 
         //
         // POST: /Account/LogOff
-
        
         public ActionResult LogOff(string returnUrl)
         {
@@ -76,6 +75,24 @@ namespace MvcApplication1.Controllers
             return PartialView("_LogOffPartial", null);             
         }
 
+
+        public ActionResult UserList()
+        {
+            UsersContext context = new UsersContext();
+
+            List<User> response =
+                context.Users.Where(u => true).ToList();
+            List<UserListItem> model = new List<UserListItem>();
+
+            foreach (var user in response)
+	        {
+                model.Add(
+                    new UserListItem(user.Id, user.Email, user.Name, user.IsActive)
+                );
+	        }
+
+            return View("UserList", model); 
+        }
 
 
         //
@@ -155,22 +172,149 @@ namespace MvcApplication1.Controllers
         //
         // GET: /Account/Manage
 
-        public ActionResult Manage(ManageMessageId? message)
+        public ActionResult Manage(string Id, string message)
         {
-            ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
-                : "";
-            ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
-            ViewBag.ReturnUrl = Url.Action("Manage");
-            return View();
+            UsersContext context = new UsersContext();
+            int _id = Convert.ToInt32(Id);
+            User response =
+                context.Users.FirstOrDefault(u => u.Id == _id );           
+
+            var RoleProvider = (SimpleRoleProvider)Roles.Provider;
+            var roles = RoleProvider.GetRolesForUser(response.Email).ToList();
+
+            ManageModel model = new ManageModel()
+            {
+                Id = response.Id,
+                Email = response.Email,
+                Name = response.Name,
+                IsActive = response.IsActive,
+                IsAdmin = roles.Contains("Admin")
+            };
+
+            ViewBag.Message = message;
+            
+            return View("Manage", model);
         }
 
         //
-        // POST: /Account/Manage
+        // POST: /Account/Manage   
 
-       
+        [HttpPost]
+        public ActionResult Manage(string Id, ManageModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                UsersContext context = new UsersContext();
+                int _id = Convert.ToInt32(Id);
+                User response =
+                    context.Users.FirstOrDefault(u => u.Id == _id);
+
+                //update data
+                if (string.Compare(response.Name, model.Name, false)!=0 
+                    ||response.IsActive != model.IsActive)
+                {
+                    response.Name = model.Name;
+                    response.IsActive = model.IsActive;
+
+                    context.SaveChanges();
+                }
+                
+                //update roles
+                var roles = (SimpleRoleProvider)Roles.Provider;
+                var membership = (SimpleMembershipProvider)Membership.Provider;
+
+                if (model.IsAdmin)
+                {
+                    if (!roles.GetRolesForUser(response.Email).Contains("Admin"))
+                    {
+                        Roles.AddUserToRole(response.Email, "Admin");
+                    }
+                }
+                else
+                {
+                    if (roles.GetRolesForUser(response.Email).Contains("Admin"))
+                    {
+                        Roles.RemoveUserFromRole(response.Email, "Admin");
+                    }
+                }
+
+                if (model.IsActive)
+                {
+                    if (!roles.GetRolesForUser(response.Email).Contains("Author"))
+                    {
+                        Roles.AddUserToRole(response.Email, "Author");
+                    }
+                }
+                else
+                {
+                    if (roles.GetRolesForUser(response.Email).Contains("Author"))
+                    {
+                        Roles.RemoveUserFromRole(response.Email, "Author");
+                    }
+                }
+
+                return RedirectToAction("Manage", new {Id = model.Id, message = "Аккаунт успешно обновлен" });
+            }
+            else
+            {
+                ModelState.AddModelError("", "Изменения не сохранены");
+            }
+
+            return View("Manage", model);
+        }
+
+        //GET: /Account/ChangePassword
+            
+        public ActionResult ChangePassword(string Id,  string message)
+        {
+            UsersContext context = new UsersContext();
+            int _id = Convert.ToInt32(Id);
+            User response =
+                context.Users.FirstOrDefault(u => u.Id == _id);
+
+            PasswordChangeModel model = new PasswordChangeModel()
+            {
+                Id = Convert.ToInt32(Id),
+                Email = response.Email
+            };
+
+            ViewBag.Message = message;
+
+            return View("ChangePassword", model);
+        }
+
+
+        //
+        // POST: /Account/ChangePassword   
+
+        [HttpPost]
+        public ActionResult ChangePassword(PasswordChangeModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                bool IsChanged = WebSecurity.ChangePassword(model.Email, model.OldPassword, model.NewPassword);
+            
+            
+                if (IsChanged)
+                {
+                    string _message = "Пароль успешно изменен";
+
+                    return RedirectToAction("ChangePassword", "Account", new { Id = model.Id, message = _message });
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Ошибка! Неверный текущий пароль?");  
+                }                
+
+                return View("ChangePassword", model);
+
+            }
+            else
+            {
+                ModelState.AddModelError("", "Пароль не обновлен");
+            }
+            return View("ChangePassword", model);
+        }
 
         #region Helpers
         private ActionResult RedirectToLocal(string returnUrl)

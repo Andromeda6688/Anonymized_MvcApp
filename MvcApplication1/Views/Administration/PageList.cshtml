@@ -17,21 +17,21 @@
                 </div>
             }       
 
-            <table class="pagesList">
-                <tr>
-                    <th class="big_cell" width="30%">Заголовок</th>
-                    <th width="14%">Отображать на сайте</th>
-                    <th width="14%">Адрес</th>
-                    <th width="14%">Пункт в меню</th>
-                    <th width="14%">Родительская страница</th>
-                    <th width="14%">Порядок отображения</th>
-                </tr>
+        <table class="admin_list">
+            <tr>
+                <th class="big_cell" width="30%">Заголовок</th>
+                <th width="14%">Отображать на сайте</th>
+                <th width="14%">Адрес</th>
+                <th width="14%">Пункт в меню</th>
+                <th width="14%">Родительская страница</th>
+                <th width="14%">Порядок отображения</th>
+            </tr>
 
 
             @foreach (var index in Model)//index
             {
                 <tr>
-                    <td >
+                    <td>
                         <p>
                             <a href="@Url.Action("Page", "Administration", new { Id = index.Id })">
                                 @index.Title
@@ -44,15 +44,16 @@
                     <td>@index.Parent</td>
                     <td>@index.DisplayOrder</td>
                 </tr>
-                
-                
+
+
                 foreach (var parent in index.Children)//parents
                 {
                     <tr>
                         <td>
-                            <p>&nbsp;&nbsp;
+                            <p>
+                                &nbsp;&nbsp;
                                 <a href="@Url.Action("Page", "Administration", new { Id = parent.Id })">
-                                     @parent.Title
+                                    @parent.Title
                                 </a>
                             </p>
                         </td>
@@ -62,7 +63,7 @@
                         <td>@parent.Parent</td>
                         <td>@parent.DisplayOrder</td>
                     </tr>
-                
+
                     foreach (var child in parent.Children) // children
                     {
                         <tr>
@@ -79,12 +80,12 @@
                             <td class="child_cell">@child.IsInMenu</td>
                             <td class="child_cell">@child.Parent</td>
                             <td class="child_cell">@child.DisplayOrder</td>
-                    </tr>                    
+                        </tr>
                     }
                 }
             }
 
-            </table>
+        </table>
             <input class="approve_button" type="button" value="Новая страница"
                    onclick="location.href='@Url.Action("Page", "Administration")'" />
 </fieldset>

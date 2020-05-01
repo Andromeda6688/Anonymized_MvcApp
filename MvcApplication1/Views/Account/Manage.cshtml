@@ -1,32 +1,46 @@
-﻿@model MvcApplication1.Models.LocalPasswordModel
+﻿@model MvcApplication1.Models.ManageModel
 @{
-    ViewBag.Title = "Manage Account";
+    Layout = "~/Views/Administration/_AdminLayout.cshtml";
 }
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-</hgroup>
 
-<p class="message-success">@ViewBag.StatusMessage</p>
+<h1>Изменение аккаунта</h1>
+<script src="~/Scripts/jquery-1.8.2.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
-<p>You're logged in as <strong>@User.Identity.Name</strong>.</p>
-
-@if (ViewBag.HasLocalPassword)
+@using (Html.BeginForm())
 {
-    @Html.Partial("_ChangePasswordPartial")
-}
-else
-{ 
-    @Html.Partial("_SetPasswordPartial")
-}
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+    <label class="validation-summary-errors"> @ViewBag.Message</label>
+    <fieldset>
+        <legend>Обновить информацию</legend>
+        <ul>            
+            @Html.EditorFor(m => m.Id)           
+            <li>
+                <label> Логин / Email&nbsp;@Model.Email</label>
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Name)
+                @Html.TextBoxFor(m => m.Name)
+                @Html.ValidationMessageFor(m => m.Name)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.IsActive)
+                @Html.CheckBoxFor(m => m.IsActive)
+                @Html.ValidationMessageFor(m => m.IsActive)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.IsAdmin)
+                @Html.CheckBoxFor(m => m.IsAdmin)
+                @Html.ValidationMessageFor(m => m.IsAdmin)
+            </li>
+        </ul>
 
-<section id="externalLogins">
-    @Html.Action("RemoveExternalLogins")
+        <div class="buttons">
+            <input class="approve_button" type="submit" value="Сохранить" />
+        </div>
 
-    <h3>Add an external login</h3>
-    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
-</section>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    </fieldset>
 }

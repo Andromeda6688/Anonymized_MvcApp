@@ -10,29 +10,27 @@ namespace MvcApplication1.Global
 {
     public class PageValidation
     {
-  
-        public int Id;
+        [HiddenInput(DisplayValue = false)]
+        public int Id { get; set; }
 
         
         [Required(ErrorMessage = "Обязательное поле")]
-        [MaxLength(60, ErrorMessage = "Длина не более 60 символов")]
+        [StringLength(60, ErrorMessage = "Длина не более 60 символов")]
         public string Title;
 
-        
-        [MaxLength(160, ErrorMessage="Длина не более 160 символов")]
+
+        [StringLength(160, ErrorMessage = "Длина не более 160 символов")]
         public string Description;
 
-        
-        [MaxLength(160, ErrorMessage="Длина не более 160 символов")]
+
+        [StringLength(160, ErrorMessage = "Длина не более 160 символов")]
         public string Keywords;
 
         [AllowHtml]
         [UIHint("tinymce_full")]
         public string Content { get; set; }
-
         
         public int ParentId;
-
         
         [Required (ErrorMessage="Обязательнео поле")]        
         [RegularExpression("^[A-Za-z0-9]+$",  

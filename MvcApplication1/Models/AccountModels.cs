@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Globalization;
+using System.Web.Mvc;
 using System.Web.Security;
 
 namespace MvcApplication1.Models
@@ -55,14 +57,15 @@ namespace MvcApplication1.Models
         public string Name { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Не менее 6 и не более 100 знаков", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
         public string Password { get; set; }
 
+        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Подтвердить пароль")]
-        [Compare("Password", ErrorMessage = "Пароли не совпадают")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Пароли не совпадают")]
         public string ConfirmPassword { get; set; }
 
         [Required]
@@ -74,5 +77,73 @@ namespace MvcApplication1.Models
         public bool IsAdmin { get; set; }
 
     }
+
+    public class ManageModel
+    {
+        [HiddenInput(DisplayValue = false)]
+        public int Id { get; set; }
+
+        [Display(Name = "Email / Логин")]
+        public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "Имя и Фамилия")]
+        public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "Аккаунт активен?")]
+        public bool IsActive { get; set; }
+
+        [Required]
+        [Display(Name = "Админские права")]
+        public bool IsAdmin { get; set; }
+
+    /*  [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Старый пароль")]
+        public string OldPassword { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Новый пароль")]
+        [StringLength(100, ErrorMessage = "Не менее 6 и не более 100 знаков", MinimumLength = 6)]
+        public string NewPassword { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Подтвердить пароль")]
+        public string ConfirmPassword { get; set; }*/
+    }
+
+
+    public class PasswordChangeModel
+    {
+        [HiddenInput(DisplayValue = false)]
+        public int Id { get; set; }
+
+        [Required]
+        [ReadOnly(true)]
+        [Display(Name = "Email / Логин")]
+        public string Email { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Старый пароль")]
+        public string OldPassword { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Новый пароль")]
+        [StringLength(100, ErrorMessage = "Не менее 6 и не более 100 знаков", MinimumLength = 6)]
+        public string NewPassword { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Подтвердить пароль")]
+        [System.ComponentModel.DataAnnotations.Compare("NewPassword", ErrorMessage = "Пароли не совпадают")]
+        public string ConfirmPassword { get; set; }
+    }
+
+
   
 }
