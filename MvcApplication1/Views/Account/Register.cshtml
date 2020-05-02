@@ -50,10 +50,12 @@
                     @Html.ValidationMessageFor(m => m.IsAdmin)
                 </li>
             </ul>
-
-            <input class="main_button" type="submit" value="Создать" />    
-    
-       
+              
+            <div class="buttons">
+                <input class="approve_button" type="submit" value="Создать" />
+                <input class="cancel_button" type="button" value="Отменить"
+                       onclick="location.href='@Url.Action("UserList", "Account")'" />
+            </div> 
 }
         </fieldset>
     </section>

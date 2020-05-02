@@ -92,7 +92,7 @@
     
     <fieldset class="danger_area">
         @Html.ActionLink("Удалить страницу", "DeletePage", "Administration",
-         new { confirm = true, pageId = Model.Page.Id },
+         new { confirm = true, Id = Model.Page.Id },
          new { onclick = "return confirm('Вы в самом деле хотите удалить страницу?')" }) 
     </fieldset>
     

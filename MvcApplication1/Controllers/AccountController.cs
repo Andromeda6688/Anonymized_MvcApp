@@ -38,10 +38,8 @@ namespace MvcApplication1.Controllers
             string message;
 
             if (ModelState.IsValid) 
-            {
-                var RolesProvider = (SimpleRoleProvider)Roles.Provider;
-
-                if (RolesProvider.GetRolesForUser(model.Email).Contains("Author"))
+            {                
+                if (Roles.GetRolesForUser(model.Email).Contains("Author"))
                 {
                     if (WebSecurity.Login(model.Email, model.Password, persistCookie: model.RememberMe))
 	                {
@@ -67,26 +65,29 @@ namespace MvcApplication1.Controllers
                 message = "Неудачная попытка входа";
             }
 
-            // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", message);
             return RedirectToAction("Login", "Account");
         }
 
         //
         // POST: /Account/LogOff
-       
+        [AllowAnonymous]
         public ActionResult LogOff(string returnUrl)
         {
-            WebSecurity.Logout();
+            if (WebSecurity.IsAuthenticated)
+            {
+                WebSecurity.Logout();
 
-            if (!string.IsNullOrEmpty(returnUrl))
-            {
-                return Redirect(returnUrl);
+                if (!string.IsNullOrEmpty(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            return Redirect(returnUrl);            
         }
 
         [AllowAnonymous]
@@ -132,6 +133,7 @@ namespace MvcApplication1.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel model)
         {
             if (ModelState.IsValid)
@@ -139,28 +141,26 @@ namespace MvcApplication1.Controllers
                 try
                 {
                     WebSecurity.CreateUserAndAccount(model.Email, model.Password,
-                        new { Name = model.Name, IsActive = model.IsActive});
-
-                    var roles = (SimpleRoleProvider)Roles.Provider;
+                        new { Name = model.Name, IsActive = model.IsActive});                   
                     
                     if (model.IsAdmin)
                     {
-                        if (!roles.RoleExists("Admin"))
+                        if (!Roles.RoleExists("Admin"))
                         {
-                            roles.CreateRole("Admin");
+                            Roles.CreateRole("Admin");
                         }
 
-                        roles.AddUsersToRoles(new [] {model.Email}, new [] {"Admin"});
+                        Roles.AddUsersToRoles(new[] { model.Email }, new[] { "Admin" });
                     }
 
                     if (model.IsActive)
                     {
-                        if (!roles.RoleExists("Author"))
+                        if (!Roles.RoleExists("Author"))
                         {
-                            roles.CreateRole("Author");
+                            Roles.CreateRole("Author");
                         }
 
-                        roles.AddUsersToRoles(new[] { model.Email }, new[] { "Author" });
+                        Roles.AddUsersToRoles(new[] { model.Email }, new[] { "Author" });
 
                     }
                    
@@ -182,16 +182,14 @@ namespace MvcApplication1.Controllers
         //
         // GET: /Account/Manage
 
-        public ActionResult Manage(string Id, string message)
+        public ActionResult Manage(string Id, string Message)
         {
             UsersContext context = new UsersContext();
             int _id = Convert.ToInt32(Id);
             User response =
                 context.Users.FirstOrDefault(u => u.Id == _id );
 
-            
-            var RoleProvider = (SimpleRoleProvider)Roles.Provider;
-            var roles = RoleProvider.GetRolesForUser(response.Email).ToList();
+            var roles = Roles.GetRolesForUser(response.Email).ToList();
 
             ManageModel model = new ManageModel()
             {
@@ -201,8 +199,8 @@ namespace MvcApplication1.Controllers
                 IsActive = response.IsActive,
                 IsAdmin = roles.Contains("Admin")
             };
-           
-            ViewBag.Message = message;
+
+            ViewBag.Message = Message;
             
             return View("Manage", model);
         }
@@ -211,7 +209,7 @@ namespace MvcApplication1.Controllers
         // POST: /Account/Manage   
 
         [HttpPost]
-
+        [ValidateAntiForgeryToken]
         public ActionResult Manage(string Id, ManageModel model)
         {
             if (ModelState.IsValid)
@@ -268,7 +266,7 @@ namespace MvcApplication1.Controllers
                         }
                     }
 
-                    return RedirectToAction("Manage", new { Id = model.Id, message = "Аккаунт успешно обновлен" });
+                    return RedirectToAction("Manage", new { Id = model.Id, Message = "Аккаунт успешно обновлен" });
                 }
 
                 ModelState.AddModelError("", "Аккаунт SuperAdmin изменять нельзя"); 
@@ -282,8 +280,8 @@ namespace MvcApplication1.Controllers
         }
 
         //GET: /Account/ChangePassword
-  
-        public ActionResult ChangePassword(string Id,  string message)
+
+        public ActionResult ChangePassword(string Id, string Message)
         {
             UsersContext context = new UsersContext();
             int _id = Convert.ToInt32(Id);
@@ -296,7 +294,7 @@ namespace MvcApplication1.Controllers
                 Email = response.Email
             };
 
-            ViewBag.Message = message;
+            ViewBag.Message = Message;
 
             return View("ChangePassword", model);
         }
@@ -306,7 +304,7 @@ namespace MvcApplication1.Controllers
         // POST: /Account/ChangePassword   
 
         [HttpPost]
-
+        [ValidateAntiForgeryToken]
         public ActionResult ChangePassword(PasswordChangeModel model)
         {
             if (ModelState.IsValid)
@@ -326,7 +324,7 @@ namespace MvcApplication1.Controllers
                     {
                         string _message = "Пароль успешно изменен";
 
-                        return RedirectToAction("ChangePassword", "Account", new { Id = model.Id, message = _message });
+                        return RedirectToAction("ChangePassword", "Account", new { Id = model.Id, Message = _message });
                     }
                     else
                     {
@@ -357,22 +355,29 @@ namespace MvcApplication1.Controllers
                 User response =
                     context.Users.FirstOrDefault(u => u.Id == _id);
 
-                try
+                if (Roles.GetRolesForUser(response.Email).Count() == 0)
                 {
-                    // TODO: Add delete logic here
-                    if (Roles.GetRolesForUser(response.Email).Count() > 0)
+                    try
                     {
-                        Roles.RemoveUserFromRoles(response.Email, Roles.GetRolesForUser(response.Email));
-                    }
-                    ((SimpleMembershipProvider)Membership.Provider).DeleteAccount(response.Email); // deletes record from webpages_Membership table
-                    ((SimpleMembershipProvider)Membership.Provider).DeleteUser(response.Email, true); // deletes record from UserProfile table
+                        // TODO: Add delete logic here
+                        if (Roles.GetRolesForUser(response.Email).Count() > 0)
+                        {
+                            Roles.RemoveUserFromRoles(response.Email, Roles.GetRolesForUser(response.Email));
+                        }
+                        ((SimpleMembershipProvider)Membership.Provider).DeleteAccount(response.Email); // deletes record from webpages_Membership table
+                        ((SimpleMembershipProvider)Membership.Provider).DeleteUser(response.Email, true); // deletes record from UserProfile table
 
-                    return RedirectToAction("UserList", "Account", new { message = "Пользователь успешно удален" });
+                        return RedirectToAction("UserList", "Account", new { Message = "Пользователь успешно удален" });
+                    }
+                    catch
+                    {
+                        return RedirectToAction("UserList", "Account", new { Message = "Ошибка удаления" });
+                    }
                 }
-                catch
+                else
                 {
-                    return RedirectToAction("UserList", "Account", new { message = "Ошибка удаления" });
-                }                
+                    return RedirectToAction("Manage", "Account", new { Id = Id, Message = "Нельзя удалить активного пользователя и/или админа" });
+                }
             }
 
             return RedirectToAction("Manage", "Account", new { Id = Id });

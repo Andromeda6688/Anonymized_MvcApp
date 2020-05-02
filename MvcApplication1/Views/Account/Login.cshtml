@@ -3,9 +3,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@{
-   // ViewBag.Title = "Вход";
-}
 
 <div class="small_formcontainer">
 
@@ -16,6 +13,11 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
+    
+    if (WebSecurity.IsAuthenticated)
+    {
+        <label class="validation-summary-errors">Не хватает прав для доступа к странице</label>    
+    }
             
             <ul>
                 <li>

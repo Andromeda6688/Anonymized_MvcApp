@@ -32,7 +32,7 @@ namespace MvcApplication1.Controllers
             return View("PageList", model);
         }
 
-        public ActionResult Page(string Id, string Message)
+        public ActionResult Page(string Id, string message)
         {
             Page _page;
 
@@ -48,9 +48,9 @@ namespace MvcApplication1.Controllers
 
                 SqlRepository repository = new SqlRepository();
 
-                _page = repository.GetPage(pageID);                
+                _page = repository.GetPage(pageID);
 
-                ViewBag.Message = Message;
+                ViewBag.Message = message;
             }
 
             if (string.Compare(_page.Address, "Index", true)==0)
@@ -65,7 +65,7 @@ namespace MvcApplication1.Controllers
             }            
         }
 
-
+        [Authorize(Roles = "Admin")]
         public ActionResult IndexEdit(string Message)
         {
             Page _page;
@@ -76,8 +76,7 @@ namespace MvcApplication1.Controllers
 
             ViewBag.Message = Message;
 
-            return View("IndexEdit", _page);
-           
+            return View("IndexEdit", _page);           
         }
 
         [HttpPost]
@@ -97,12 +96,11 @@ namespace MvcApplication1.Controllers
                     {
 
                         SqlRepository repository = new SqlRepository();
-                        int newPageId = repository.CreatePage(model.Page);
-                        ViewBag.Message = "Страница добавлена";
+                        int newPageId = repository.CreatePage(model.Page);                        
 
                         if (newPageId!=0)
                         {
-                            return RedirectToAction("Page", "Administration", new { Id = newPageId });
+                            return RedirectToAction("Page", "Administration", new { Id = newPageId, Message = "Страница создана" });
                         }
                         else
                         {
@@ -140,6 +138,7 @@ namespace MvcApplication1.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult IndexEdit(Page model)
         {
            if (string.IsNullOrEmpty(model.Title))
@@ -193,6 +192,7 @@ namespace MvcApplication1.Controllers
             return View("IndexEdit", model);
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult DeletePage(bool confirm, string Id)
         {
             SqlRepository repository = new SqlRepository();

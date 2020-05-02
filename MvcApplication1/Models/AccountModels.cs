@@ -108,9 +108,7 @@ namespace MvcApplication1.Models
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
 
-        [Required]
-        [ReadOnly(true)]
-        [Display(Name = "Email / Логин")]
+        [HiddenInput(DisplayValue = false)]
         public string Email { get; set; }
 
         [Required]
