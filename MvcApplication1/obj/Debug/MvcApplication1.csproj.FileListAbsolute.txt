@@ -170,3 +170,4 @@ I:\euler\MvcApp2\MvcApp\MvcApplication1\bin\zh-Hant\System.Spatial.resources.dll
 I:\euler\MvcApp2\MvcApp\MvcApplication1\obj\Debug\MvcApplication1.dll
 I:\euler\MvcApp2\MvcApp\MvcApplication1\obj\Debug\MvcApplication1.pdb
 I:\euler\MvcApp2\MvcApp\MvcApplication1\obj\Debug\MvcApplication1.csprojResolveAssemblyReference.cache
+I:\euler\MvcApp2\MvcApp\MvcApplication1\bin\DataAnnotationsExtensions.dll

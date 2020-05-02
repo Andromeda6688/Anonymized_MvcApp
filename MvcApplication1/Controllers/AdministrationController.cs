@@ -9,7 +9,8 @@ using System.Text.RegularExpressions;
 
 namespace MvcApplication1.Controllers
 {
-    [Authorize]
+
+    [Authorize(Roles = "Author")]
     public class AdministrationController : Controller
     {
         //
@@ -192,13 +193,15 @@ namespace MvcApplication1.Controllers
             return View("IndexEdit", model);
         }
 
-        public ActionResult DeletePage(bool confirm, int pageId)
+        public ActionResult DeletePage(bool confirm, string Id)
         {
             SqlRepository repository = new SqlRepository();
 
+            int _id = Convert.ToInt32(Id);
+
             if (confirm)
             {
-                bool result = repository.RemovePage(pageId);
+                bool result = repository.RemovePage(_id);
 
                 if (result) //deleted
                 {
@@ -206,11 +209,11 @@ namespace MvcApplication1.Controllers
                 }
                 else //error
                 {
-                    return RedirectToAction("Page", "Administration", new { Id = pageId, Message = "Нельзя удалить страницу, которая отображается на сайте. Сначала ее нужно скрыть." });
+                    return RedirectToAction("Page", "Administration", new { Id = _id, Message = "Нельзя удалить страницу, которая отображается на сайте. Сначала ее нужно скрыть." });
                 }
             }
 
-            return RedirectToAction("Page", "Administration", new { Id = pageId });                       
+            return RedirectToAction("Page", "Administration", new { Id = _id });                       
         }
 
         public ActionResult AdminMenuPartial()

@@ -13,7 +13,7 @@ using MvcApplication1.Models;
 
 namespace MvcApplication1.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [InitializeSimpleMembership]
     public class AccountController : Controller
     {
@@ -35,13 +35,40 @@ namespace MvcApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid && WebSecurity.Login(model.Email, model.Password, persistCookie: model.RememberMe))
+            string message;
+
+            if (ModelState.IsValid) 
             {
-                return Redirect(returnUrl);
+                var RolesProvider = (SimpleRoleProvider)Roles.Provider;
+
+                if (RolesProvider.GetRolesForUser(model.Email).Contains("Author"))
+                {
+                    if (WebSecurity.Login(model.Email, model.Password, persistCookie: model.RememberMe))
+	                {
+                        if (string.IsNullOrEmpty(returnUrl))
+                        {
+                            return RedirectToAction("PageList", "Administration"); //Admin/PageList
+                        }
+
+                        return Redirect(returnUrl);
+                    }
+                    else
+                    {
+                        message = "Неудачная попытка входа";
+                    }		 
+	            }
+                else
+                {                    
+                    message = "Аккаунт неактивен";
+                }                
+            }
+            else
+            {
+                message = "Неудачная попытка входа";
             }
 
             // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "Неудачная попытка входа");
+            ModelState.AddModelError("", message);
             return RedirectToAction("Login", "Account");
         }
 
@@ -75,8 +102,8 @@ namespace MvcApplication1.Controllers
             return PartialView("_LogOffPartial", null);             
         }
 
-
-        public ActionResult UserList()
+        
+        public ActionResult UserList(string message)
         {
             UsersContext context = new UsersContext();
 
@@ -91,14 +118,20 @@ namespace MvcApplication1.Controllers
                 );
 	        }
 
+            ViewBag.Message = message;
+
             return View("UserList", model); 
         }
 
-
         //
         // GET: /Account/Register
+        
+        public ActionResult Register()
+        {
+            return View("Register");
+        }
 
-        [AllowAnonymous]
+        [HttpPost]
         public ActionResult Register(RegisterModel model)
         {
             if (ModelState.IsValid)
@@ -120,14 +153,22 @@ namespace MvcApplication1.Controllers
                         roles.AddUsersToRoles(new [] {model.Email}, new [] {"Admin"});
                     }
 
-                    if (!roles.RoleExists("Author"))
+                    if (model.IsActive)
                     {
-                        roles.CreateRole("Author");
-                    }
+                        if (!roles.RoleExists("Author"))
+                        {
+                            roles.CreateRole("Author");
+                        }
 
-                    roles.AddUsersToRoles(new[] { model.Email }, new[] { "Author" }); 
-                    
-                    return RedirectToAction("Index", "Home");
+                        roles.AddUsersToRoles(new[] { model.Email }, new[] { "Author" });
+
+                    }
+                   
+                    UsersContext context = new UsersContext();
+                    User response =
+                        context.Users.FirstOrDefault(u => u.Email == model.Email);
+
+                    return RedirectToAction("Manage", "Account", new { Id = response.Id, message="Пользователь успешно создан" });
                     
                 }
                 catch (MembershipCreateUserException e)
@@ -136,35 +177,6 @@ namespace MvcApplication1.Controllers
                 }
             }
             return View(model);
-        }
-
-        //
-        // POST: /Account/Disassociate
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Disassociate(string provider, string providerUserId)
-        {
-            string ownerAccount = OAuthWebSecurity.GetUserName(provider, providerUserId);
-            ManageMessageId? message = null;
-
-            // Only disassociate the account if the currently logged in user is the owner
-            if (ownerAccount == User.Identity.Name)
-            {
-                // Use a transaction to prevent the user from deleting their last login credential
-                using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))
-                {
-                    bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
-                    if (hasLocalAccount || OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name).Count > 1)
-                    {
-                        OAuthWebSecurity.DeleteAccount(provider, providerUserId);
-                        scope.Complete();
-                        message = ManageMessageId.RemoveLoginSuccess;
-                    }
-                }
-            }
-
-            return RedirectToAction("Manage", new { Message = message });
         }
 
         //
@@ -199,6 +211,7 @@ namespace MvcApplication1.Controllers
         // POST: /Account/Manage   
 
         [HttpPost]
+
         public ActionResult Manage(string Id, ManageModel model)
         {
             if (ModelState.IsValid)
@@ -269,7 +282,7 @@ namespace MvcApplication1.Controllers
         }
 
         //GET: /Account/ChangePassword
-            
+  
         public ActionResult ChangePassword(string Id,  string message)
         {
             UsersContext context = new UsersContext();
@@ -293,6 +306,7 @@ namespace MvcApplication1.Controllers
         // POST: /Account/ChangePassword   
 
         [HttpPost]
+
         public ActionResult ChangePassword(PasswordChangeModel model)
         {
             if (ModelState.IsValid)
@@ -331,6 +345,37 @@ namespace MvcApplication1.Controllers
                 ModelState.AddModelError("", "Пароль не обновлен");
             }
             return View("ChangePassword", model);
+        }
+
+
+        public ActionResult DeleteUser(bool confirm, string Id)
+        {
+            if (confirm)
+            {
+                UsersContext context = new UsersContext();
+                int _id = Convert.ToInt32(Id);
+                User response =
+                    context.Users.FirstOrDefault(u => u.Id == _id);
+
+                try
+                {
+                    // TODO: Add delete logic here
+                    if (Roles.GetRolesForUser(response.Email).Count() > 0)
+                    {
+                        Roles.RemoveUserFromRoles(response.Email, Roles.GetRolesForUser(response.Email));
+                    }
+                    ((SimpleMembershipProvider)Membership.Provider).DeleteAccount(response.Email); // deletes record from webpages_Membership table
+                    ((SimpleMembershipProvider)Membership.Provider).DeleteUser(response.Email, true); // deletes record from UserProfile table
+
+                    return RedirectToAction("UserList", "Account", new { message = "Пользователь успешно удален" });
+                }
+                catch
+                {
+                    return RedirectToAction("UserList", "Account", new { message = "Ошибка удаления" });
+                }                
+            }
+
+            return RedirectToAction("Manage", "Account", new { Id = Id });
         }
 
         #region Helpers

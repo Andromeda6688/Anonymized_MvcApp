@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataAnnotationsExtensions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -50,6 +51,8 @@ namespace MvcApplication1.Models
     {
         [Required]
         [Display(Name = "Email / Логин")]
+        //[Email]
+        [RegularExpression(@"^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-‌​]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$", ErrorMessage = "Неверный формат Email")]
         public string Email { get; set; }
 
         [Required]

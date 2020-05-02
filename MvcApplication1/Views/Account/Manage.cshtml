@@ -44,3 +44,9 @@
 
     </fieldset>
 }
+
+<fieldset class="danger_area">
+    @Html.ActionLink("Удалить пользователя", "DeleteUser", "Account",
+         new { confirm = true, Id = Model.Id },
+         new { onclick = "return confirm('Вы в самом деле хотите удалить пользователя?')" })
+</fieldset>

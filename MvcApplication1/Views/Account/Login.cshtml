@@ -11,11 +11,12 @@
 
     <section id="loginForm">
         <fieldset class="small">
+            <legend>Залогиньтесь, чтобы войти</legend>
 @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
-            <legend>Залогиньтесь, чтобы войти</legend>
+            
             <ul>
                 <li>
                     @Html.LabelFor(m => m.Email)
