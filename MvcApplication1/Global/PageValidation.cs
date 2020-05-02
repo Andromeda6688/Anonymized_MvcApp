@@ -14,16 +14,16 @@ namespace MvcApplication1.Global
         public int Id { get; set; }
 
         
-        [Required(ErrorMessage = "Обязательное поле")]
-        [StringLength(60, ErrorMessage = "Длина не более 60 символов")]
+        [Required]
+        [StringLength(60)]
         public string Title;
 
 
-        [StringLength(160, ErrorMessage = "Длина не более 160 символов")]
+        [StringLength(160)]
         public string Description;
 
 
-        [StringLength(160, ErrorMessage = "Длина не более 160 символов")]
+        [StringLength(160)]
         public string Keywords;
 
         [AllowHtml]
@@ -32,9 +32,9 @@ namespace MvcApplication1.Global
         
         public int ParentId;
         
-        [Required (ErrorMessage="Обязательнео поле")]        
+        [Required]        
         [RegularExpression("^[A-Za-z0-9]+$",  
-            ErrorMessage = "Допускаются только латинские буквы и цифры")]
+            ErrorMessage = "Only latin letters and digits are allowed")]
         public string Address;
 
         
@@ -42,7 +42,7 @@ namespace MvcApplication1.Global
 
         
         [RegularExpression("^[0-9]+$",
-            ErrorMessage = "Допускается только число")]
+            ErrorMessage = "Only digits are allowed")]
         public System.Nullable<int> DisplayOrder;
     }
 }

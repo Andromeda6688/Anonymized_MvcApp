@@ -219,8 +219,8 @@ namespace MvcApplication1.Controllers
         public ActionResult AdminMenuPartial()
         {
             List<NavMenuItem> model = new List<NavMenuItem>()
-            { new NavMenuItem() { Title = "Страницы", Address = "Admin/PageList" },
-              new NavMenuItem() { Title = "Пользователи", Address = "Account/UserList"}
+            { new NavMenuItem() { Title = "Pages", Address = "Admin/PageList" },
+              new NavMenuItem() { Title = "Users", Address = "Account/UserList"}
             };
 
             return PartialView("_AdminMenuPartial", model);

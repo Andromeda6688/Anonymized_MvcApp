@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <link href="~/Scripts/bxslider-4-4.2.12/jquery.bxslider.css" rel="stylesheet">
+    <script src="~/Scripts/bxslider-4-4.2.12/jquery.bxslider.min.js"></script>
+
+<script>
+    jQuery(document).ready(function () {
+        jQuery('.bxslider').bxSlider(
+            {
+                touchEnabled: true,
+                controls: true,
+                speed: 2000,
+                startSlide: 0,
+                infiniteLoop: true,
+                auto: true
+            });
+    });
+</script>
+}
+
+@section SEO {
+    <title>Our famous local artist</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+}
+
+<div>
+    <h1>Our famous local artist</h1>
+
+    <ul class="bxslider">
+        <li><img src="/imgs/Artist/bogolyubov.png"></li>
+        <li><img src="/imgs/Artist/stranger.png"></li>
+        <li><img src="/imgs/Artist/autoportrait.png"></li>
+        <li><img src="/imgs/Artist/renuar.png"></li>
+        <li><img src="/imgs/Artist/bedouin.png"></li>
+        <li><img src="/imgs/Artist/pearl.png"></li>
+    </ul>
+</div>

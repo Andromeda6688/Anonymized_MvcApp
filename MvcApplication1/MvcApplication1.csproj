@@ -213,8 +213,7 @@
     <Content Include="App_Data\WebSiteDB_log.ldf">
       <DependentUpon>WebSiteDB.mdf</DependentUpon>
     </Content>
-    <Content Include="Content\LCKStyle.css" />
-    <Content Include="Content\TestStyle.css" />
+    <Content Include="Content\Style.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -575,12 +574,10 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Administration\PageEdit.cshtml" />
     <Content Include="Views\Home\Page.cshtml" />
-    <Content Include="Views\Home\Test.cshtml" />
     <Content Include="Views\Account\_LogOffPartial.cshtml" />
     <Content Include="Views\Shared\_NavMenuPartial.cshtml" />
     <Content Include="Views\Administration\_AdminLayout.cshtml" />
@@ -588,7 +585,7 @@
     <Content Include="Views\Administration\PageList.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\tinymce_full_compressed.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\tinymce_full.cshtml" />
-    <Content Include="Views\Home\Shubin.cshtml" />
+    <Content Include="Views\Home\Artist.cshtml" />
     <Content Include="Views\Administration\IndexEdit.cshtml" />
     <Content Include="Views\Account\UserList.cshtml" />
   </ItemGroup>

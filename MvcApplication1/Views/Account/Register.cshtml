@@ -3,7 +3,7 @@
     Layout = "~/Views/Administration/_AdminLayout.cshtml";
 }
 
-<h1>Создать новый аккаунт</h1>
+<h1>Create new user</h1>
 <script src="~/Scripts/jquery-1.8.2.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
@@ -12,7 +12,7 @@
 
     <section>
         <fieldset class="small">
-            <legend>Регистрация</legend>
+            <legend>fill info</legend>
 @using (Html.BeginForm())
 {
      @Html.AntiForgeryToken()
@@ -52,8 +52,8 @@
             </ul>
               
             <div class="buttons">
-                <input class="approve_button" type="submit" value="Создать" />
-                <input class="cancel_button" type="button" value="Отменить"
+                <input class="approve_button" type="submit" value="Create" />
+                <input class="cancel_button" type="button" value="cancel"
                        onclick="location.href='@Url.Action("UserList", "Account")'" />
             </div> 
 }

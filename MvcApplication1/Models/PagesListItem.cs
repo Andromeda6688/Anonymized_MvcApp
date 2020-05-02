@@ -18,7 +18,7 @@ namespace MvcApplication1.Models
         {
             get
             {
-                return _isVisible ? "Да" : "Нет";
+                return _isVisible ? "Yes" : "No";
             }
         }
         bool _isVisible;
@@ -26,7 +26,7 @@ namespace MvcApplication1.Models
         public string IsInMenu {
             get 
             {
-                return _isInMenu ? "Да" : "Нет";                
+                return _isInMenu ? "Yes" : "No";               
             }
         }
         bool _isInMenu;

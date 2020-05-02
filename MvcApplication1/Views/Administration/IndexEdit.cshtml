@@ -3,7 +3,7 @@
     Layout = "~/Views/Administration/_AdminLayout.cshtml";
 }
 
-<h1>Редактирование страницы</h1>
+<h1>Edit page</h1>
 
     <section>
        
@@ -16,18 +16,18 @@
         <legend>SEO</legend>
             <ul>
                 <li>
-                    @Html.Label("Заголовок")
+                    @Html.LabelFor(m => m.Title)
                     @Html.TextBoxFor(m=> m.Title)
                     @Html.ValidationMessageFor(m => m.Title)
                 </li>
 
                 <li>
-                    @Html.Label("Описание (description)")
+                    @Html.LabelFor(m => m.Description)
                     @Html.TextBoxFor(m => m.Description)
                     @Html.ValidationMessageFor(m => m.Description)
                 </li>
                 <li>
-                    @Html.Label("Ключевые слова (keywords)")
+                    @Html.LabelFor(m => m.Keywords)
                     @Html.TextBoxFor(m => m.Keywords)
                     @Html.ValidationMessageFor(m => m.Keywords)
                 </li>
@@ -35,17 +35,17 @@
     </fieldset> 
 
      <fieldset>
-        <legend>Основное содержимое</legend>
+        <legend>Content</legend>
          @Html.EditorFor(m => m.Content)
     </fieldset>
 
     <div class="buttons">
-        <input class="approve_button" type="submit" value="Сохранить" />
-        <input class="cancel_button" type="button" value="Отменить"
+        <input class="approve_button" type="submit" value="Save" />
+        <input class="cancel_button" type="button" value="Cancel"
                 onclick="location.href='@Url.Action("PageList", "Administration")'" />
     </div>
 }   
 
-    </section>
+</section>
 
  

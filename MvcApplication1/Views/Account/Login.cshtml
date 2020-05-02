@@ -8,7 +8,7 @@
 
     <section id="loginForm">
         <fieldset class="small">
-            <legend>Залогиньтесь, чтобы войти</legend>
+            <legend>Login</legend>
 @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
 {
     @Html.AntiForgeryToken()
@@ -16,9 +16,8 @@
     
     if (WebSecurity.IsAuthenticated)
     {
-        <label class="validation-summary-errors">Не хватает прав для доступа к странице</label>    
-    }
-            
+        <label class="validation-summary-errors">Not enough permissions to access the requested page</label>    
+    }     
             <ul>
                 <li>
                     @Html.LabelFor(m => m.Email)
@@ -36,7 +35,7 @@
                 </li>
             </ul>
 
-            <input class="main_button" type="submit" value="Войти" />
+            <input class="main_button" type="submit" value="Log in" />
 }
         </fieldset>
 

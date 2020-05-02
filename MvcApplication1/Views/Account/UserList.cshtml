@@ -3,10 +3,10 @@
     Layout = "~/Views/Administration/_AdminLayout.cshtml";
 }
 
-<h1>Управление пользователями</h1>
+<h1>Manage users</h1>
 <section>
     <fieldset>
-        <legend>Список страниц</legend>
+        <legend>List of the users</legend>
 
             @if (!string.IsNullOrEmpty(ViewBag.Message))
             {
@@ -19,11 +19,11 @@
 
         <table class="admin_list">
             <tr>
-                <th class="big_cell" width="25%">Логин / E-mail</th>
-                <th width="15%">Имя</th>
-                <th width="15%">Администратор?</th>
-                <th width="15%">Аккаунт активен?</th>
-                <th width="30%">Действия</th>
+                <th class="big_cell" width="25%">Login / E-mail</th>
+                <th width="15%">Name</th>
+                <th width="15%">Is administrator?</th>
+                <th width="15%">Is active?</th>
+                <th width="30%">Actions</th>
             </tr>
 
 
@@ -39,10 +39,10 @@
                     <td>
                         @if (string.Compare(user.Email, "SuperAdmin", true)!=0)
                         {
-                            <input class="approve_button" type="button" value="Управление"
+                            <input class="approve_button" type="button" value="Manage"
                                onclick="location.href='@Url.Action("Manage", "Account", new {Id = user.Id })'" />
                             
-                            <input class="approve_button" type="button" value="Смена пароля"
+                            <input class="approve_button" type="button" value="Change password"
                                onclick="location.href='@Url.Action("ChangePassword", "Account", new { Id = user.Id })'" />                            
                         }
                     </td>
@@ -50,7 +50,7 @@
             }
 
         </table>
-        <input class="approve_button" type="button" value="Новый пользователь"
+        <input class="approve_button" type="button" value="New user"
             onclick="location.href='@Url.Action("Register", "Account")'" />
 </fieldset>
 </section>

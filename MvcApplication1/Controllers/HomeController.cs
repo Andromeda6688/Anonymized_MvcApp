@@ -32,9 +32,9 @@ namespace MvcApplication1.Controllers
 
                     return View("Index", pageModel);
                 }
-                else if (string.Compare(PageName, "Shubin", true) == 0)
+                else if (string.Compare(PageName, "Artist", true) == 0)
                 {
-                    return View("Shubin");
+                    return View("Artist");
                 }
                 else
                 {

@@ -20,7 +20,7 @@ namespace MvcApplication1.Models
         {
             get
             {
-                return _isActive ? "Да" : "Нет";
+                return _isActive ? "Yes" : "No";
             }
         }
         public bool _isActive;
@@ -33,14 +33,7 @@ namespace MvcApplication1.Models
 
                 var roles = RoleProvider.GetRolesForUser(Email).ToList();
 
-                if (roles.Contains("Admin"))
-                {
-                    return "Да";
-                }
-                else
-                {
-                    return "Нет";
-                }
+                return roles.Contains("Admin") ? "Yes" : "No";                
             }
         }
 

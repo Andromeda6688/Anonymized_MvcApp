@@ -35,48 +35,48 @@ namespace MvcApplication1.Models
     public class LoginModel
     {
         [Required]
-        [Display(Name = "E-mail / Логин")]
+        [Display(Name = "E-mail / Login")]
         public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Пароль")]
+        [Display(Name = "Password")]
         public string Password { get; set; }
 
-        [Display(Name = "Запомнить меня на этом компьютере")]
+        [Display(Name = "Remember me")]
         public bool RememberMe { get; set; }
     }
 
     public class RegisterModel
     {
         [Required]
-        [Display(Name = "Email / Логин")]
+        [Display(Name = "Email / Login")]
         //[Email]
         [RegularExpression(@"^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-‌​]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$", ErrorMessage = "Неверный формат Email")]
         public string Email { get; set; }
 
         [Required]
-        [Display(Name = "Имя и Фамилия")]
+        [Display(Name = "Name")]
         public string Name { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "Не менее 6 и не более 100 знаков", MinimumLength = 6)]
+        [StringLength(100, MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Пароль")]
+        [Display(Name = "Password")]
         public string Password { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Подтвердить пароль")]
-        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Пароли не совпадают")]
+        [Display(Name = "Confirm password")]
+        [System.ComponentModel.DataAnnotations.Compare("Password")]
         public string ConfirmPassword { get; set; }
 
         [Required]
-        [Display(Name = "Аккаунт активен?")]
+        [Display(Name = "Is active?")]
         public bool IsActive { get; set; }
 
         [Required]
-        [Display(Name = "Админские права")]
+        [Display(Name = "Is admin?")]
         public bool IsAdmin { get; set; }
 
     }
@@ -86,19 +86,19 @@ namespace MvcApplication1.Models
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
 
-        [Display(Name = "Email / Логин")]
+        [Display(Name = "Email / Login")]
         public string Email { get; set; }
 
         [Required]
-        [Display(Name = "Имя и Фамилия")]
+        [Display(Name = "Name")]
         public string Name { get; set; }
 
         [Required]
-        [Display(Name = "Аккаунт активен?")]
+        [Display(Name = "Is active?")]
         public bool IsActive { get; set; }
 
         [Required]
-        [Display(Name = "Админские права")]
+        [Display(Name = "Is admin?")]
         public bool IsAdmin { get; set; }
     }
 
@@ -113,19 +113,19 @@ namespace MvcApplication1.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Старый пароль")]
+        [Display(Name = "Old password")]
         public string OldPassword { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Новый пароль")]
-        [StringLength(100, ErrorMessage = "Не менее 6 и не более 100 знаков", MinimumLength = 6)]
+        [Display(Name = "New password")]
+        [StringLength(100, MinimumLength = 6)]
         public string NewPassword { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Подтвердить пароль")]
-        [System.ComponentModel.DataAnnotations.Compare("NewPassword", ErrorMessage = "Пароли не совпадают")]
+        [Display(Name = "Confirm password")]
+        [System.ComponentModel.DataAnnotations.Compare("NewPassword")]
         public string ConfirmPassword { get; set; }
     }
 

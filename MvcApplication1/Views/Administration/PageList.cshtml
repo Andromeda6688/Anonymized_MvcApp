@@ -3,10 +3,10 @@
     Layout = "~/Views/Administration/_AdminLayout.cshtml";
 }
 
-<h1>Управление страницами</h1>
+<h1>Manage pages</h1>
 <section>
     <fieldset>
-        <legend>Список страниц</legend>
+        <legend>List of pages</legend>
 
             @if (!string.IsNullOrEmpty(ViewBag.Message))
             {
@@ -19,12 +19,12 @@
 
         <table class="admin_list">
             <tr>
-                <th class="big_cell" width="30%">Заголовок</th>
-                <th width="14%">Отображать на сайте</th>
-                <th width="14%">Адрес</th>
-                <th width="14%">Пункт в меню</th>
-                <th width="14%">Родительская страница</th>
-                <th width="14%">Порядок отображения</th>
+                <th class="big_cell" width="30%">Title</th>
+                <th width="14%">Is displayed</th>
+                <th width="14%">Address</th>
+                <th width="14%">Is in menu</th>
+                <th width="14%">Parent page</th>
+                <th width="14%">Display order</th>
             </tr>
 
 
@@ -86,7 +86,7 @@
             }
 
         </table>
-            <input class="approve_button" type="button" value="Новая страница"
+            <input class="approve_button" type="button" value="New page"
                    onclick="location.href='@Url.Action("Page", "Administration")'" />
 </fieldset>
 </section>
