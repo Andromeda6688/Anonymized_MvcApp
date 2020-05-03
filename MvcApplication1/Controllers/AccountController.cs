@@ -52,17 +52,17 @@ namespace MvcApplication1.Controllers
                     }
                     else
                     {
-                        message = "Неудачная попытка входа";
+                        message = "Unsuccessfull attempt";
                     }		 
 	            }
                 else
                 {                    
-                    message = "Аккаунт неактивен";
+                    message = "The account is inactive";
                 }                
             }
             else
             {
-                message = "Неудачная попытка входа";
+                message = "Unsuccessfull attempt";
             }
 
             ModelState.AddModelError("", message);
@@ -269,11 +269,11 @@ namespace MvcApplication1.Controllers
                     return RedirectToAction("Manage", new { Id = model.Id, Message = "Аккаунт успешно обновлен" });
                 }
 
-                ModelState.AddModelError("", "Аккаунт SuperAdmin изменять нельзя"); 
+                ModelState.AddModelError("", "The account of SuperAdmin cannot be changed in administration panel"); 
             }
             else
             {
-                ModelState.AddModelError("", "Изменения не сохранены");
+                ModelState.AddModelError("", "The changes are not saved");
             }
 
             return View("Manage", model);
@@ -322,25 +322,25 @@ namespace MvcApplication1.Controllers
             
                     if (IsChanged)
                     {
-                        string _message = "Пароль успешно изменен";
+                        string _message = "The password was successfully changed";
 
                         return RedirectToAction("ChangePassword", "Account", new { Id = model.Id, Message = _message });
                     }
                     else
                     {
-                        ModelState.AddModelError("", "Ошибка! Неверный текущий пароль?");  
+                        ModelState.AddModelError("", "Error! Wrong password?");  
                     }                
 
                     return View("ChangePassword", model);
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Пароль для SuperAdmin изменять нельзя"); 
+                    ModelState.AddModelError("", "The password of SuperAdmin can not be changed in adminstration panel"); 
                 }
             }
             else
             {
-                ModelState.AddModelError("", "Пароль не обновлен");
+                ModelState.AddModelError("", "The password was not changed");
             }
             return View("ChangePassword", model);
         }
