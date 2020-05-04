@@ -1,6 +1,14 @@
 ﻿@model MvcApplication1.Global.Page
 @{
-    Layout = "~/Views/Administration/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
+}
+
+@section SEO {
+    <title>Prolog - Administration</title>
+}
+
+@section NavigationMenu {
+    @{Html.RenderAction("AdminMenuPartial", "Administration");}
 }
 
 <h1>Edit page</h1>

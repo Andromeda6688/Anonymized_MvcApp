@@ -3,7 +3,14 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @RenderSection("SEO", required: false)
+    @if (IsSectionDefined("SEO"))
+    {
+        @RenderSection("SEO")
+    }
+    else
+    {
+        <title>Pro-log</title>
+    }
     <link rel="stylesheet" type="text/css" href="/Content/Style.css">
     @RenderSection("Scripts", required: false)
 </head>
@@ -30,9 +37,24 @@
                     </div>
                 </div>
                 <nav>
-                    @{Html.RenderAction("NavMenuPartial", "Home");    }
+                    @if (IsSectionDefined("NavigationMenu"))
+                    {
+                        @RenderSection("NavigationMenu")
+                    }
+                    else
+                    {
+                        Html.RenderAction("NavMenuPartial", "Home");
+                    }
                 </nav>
-                <div class="small_img"> </div>
+
+                @if (IsSectionDefined("HeaderContent"))
+                {
+                    @RenderSection("HeaderContent")
+                }
+                else
+                {
+                    <div class="small_img"> </div>
+                }
             </div>
         </header>
 

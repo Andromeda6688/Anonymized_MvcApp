@@ -1,13 +1,23 @@
 ﻿@model MvcApplication1.Models.ManageModel
 @{
-    Layout = "~/Views/Administration/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_MasterLayout.cshtml";
 }
 
+@section SEO {
+    <title>Prolog - Administration</title>
+}
+
+@section NavigationMenu {
+    @{Html.RenderAction("AdminMenuPartial", "Administration");}
+}
+
+@section Scripts {
+    <script src="~/Scripts/jquery-1.8.2.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}
 
 <h1>Manage user account</h1>
-<script src="~/Scripts/jquery-1.8.2.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
 @using (Html.BeginForm())
 {
