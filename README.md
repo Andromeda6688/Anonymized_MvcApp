@@ -7,7 +7,7 @@ The Pro-log WebEngine is an engine of a web-site, that allows to edit pages and 
 THE LATEST VERSION
 ------------------------------------------------------------------------------------------------------
 
-You can find the latest version under the link: <https://github.com/Andromeda6688/Anonymized_MvcApp>
+You can find the latest version under the link: <https://github.com/Andromeda6688/ProLog-WebSite-with-Administration-panel>
 
 INSTALLATION AND DEPLOYMENT
 ------------------------------------------------------------------------------------------------------
