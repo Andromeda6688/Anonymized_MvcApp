@@ -15,7 +15,7 @@ namespace MvcApplication1.Models
 
         public SqlRepository()
         {
-            if (DB.Pages.Count(p => p.ParentId == 0 && string.Compare(p.Address, "Index") == 0) == 0)
+            if (DB.Pages.Count(p => p.ParentId == 0 && string.Compare(p.Address, "Index",true) == 0) == 0)
             {
                 Initialize();
             }
