@@ -13,12 +13,35 @@ namespace MvcApplication1.Models
     {
         WebSiteDBDataContext DB = new WebSiteDBDataContext(ConfigurationManager.ConnectionStrings["WebSiteDBConnectionString"].ConnectionString);
 
+        public SqlRepository()
+        {
+            if (DB.Pages.Count(p => p.ParentId == 0 && string.Compare(p.Address, "Index") == 0) == 0)
+            {
+                Initialize();
+            }
+        }
+
         public IQueryable<Page> Pages
         {
             get
             {
                 return DB.Pages;
             }
+        }
+
+        private void Initialize()
+        {
+            Page _index = new Page()
+            {
+                Title = "Pro-log web-site",
+                ParentId = 0,
+                Address = "Index",
+                Content = "type some text",
+                DisplayOrder = 0,
+                IsVisible = true
+            };
+
+            this.CreatePage(_index);
         }
 
         public Page GetPage(string p_PageName, string p_ParentName)
